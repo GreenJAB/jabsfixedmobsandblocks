@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        "minecraft:redstone"
+    ],
+    "result": {
+        "count": 1,
+        "id": "minecraft:red_dye"
+    },
+    "category": "misc",
+    "group": "red_dye"
+}

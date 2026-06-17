@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "jabsfixedmobsandblocks:block/azalea_slab"
+    },
+    "type=double": {
+      "model": "jabsfixedmobsandblocks:block/azalea_planks"
+    },
+    "type=top": {
+      "model": "jabsfixedmobsandblocks:block/azalea_slab_top"
+    }
+  }
+}

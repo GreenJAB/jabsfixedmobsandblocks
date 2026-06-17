@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:gift",
+    "pools": [
+        {
+            "bonus_rolls": 0,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:pitcher_pod",
+                    "weight": 23
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:torchflower_seeds",
+                    "weight": 23
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:golden_dandelion",
+                    "weight": 23
+                },
+                {
+                    "type": "minecraft:tag",
+                    "name": "jabsfixedmobsandblocks:sniffer_extra",
+                    "expand": true,
+                    "weight": 1
+                }
+            ],
+            "rolls": 1
+        }
+    ],
+    "random_sequence": "minecraft:gameplay/sniffer_digging"
+}

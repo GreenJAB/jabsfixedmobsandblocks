@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chest_boat",
+  "ingredients": [
+    "minecraft:chest",
+      "jabsfixedmobsandblocks:azalea_boat"
+  ],
+  "result": {
+    "id": "jabsfixedmobsandblocks:azalea_chest_boat"
+  }
+}

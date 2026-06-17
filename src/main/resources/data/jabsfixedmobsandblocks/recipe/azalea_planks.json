@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+      "#jabsfixedmobsandblocks:azalea_logs"
+  ],
+  "result": {
+    "count": 4,
+    "id": "jabsfixedmobsandblocks:azalea_planks"
+  }
+}

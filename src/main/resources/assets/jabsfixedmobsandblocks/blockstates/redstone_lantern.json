@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,lit=true": {
+      "model": "jabsfixedmobsandblocks:block/redstone_lantern_lit"
+    },
+    "hanging=true,lit=true": {
+      "model": "jabsfixedmobsandblocks:block/redstone_lantern_hanging_lit"
+    },
+    "hanging=false,lit=false": {
+      "model": "jabsfixedmobsandblocks:block/redstone_lantern"
+    },
+    "hanging=true,lit=false": {
+      "model": "jabsfixedmobsandblocks:block/redstone_lantern_hanging"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_shelf_right",
+  "textures": {
+    "all": "jabsfixedmobsandblocks:block/azalea_shelf",
+    "particle": "jabsfixedmobsandblocks:block/stripped_azalea_log"
+  }
+}

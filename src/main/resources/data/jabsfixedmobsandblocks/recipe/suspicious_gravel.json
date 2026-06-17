@@ -1,0 +1,10 @@
+{
+  "type": "jabsfixedmobsandblocks:suspicious_block",
+  "category": "misc",
+  "inside": "#jabsfixedmobsandblocks:not_in_suspicious_block",
+  "group": "suspicious",
+  "result": {
+    "id": "minecraft:suspicious_gravel"
+  },
+  "base": "minecraft:gravel"
+}

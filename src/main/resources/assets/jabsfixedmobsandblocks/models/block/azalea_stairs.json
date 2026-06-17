@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "jabsfixedmobsandblocks:block/azalea_planks",
+    "side": "jabsfixedmobsandblocks:block/azalea_planks",
+    "top": "jabsfixedmobsandblocks:block/azalea_planks"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "multipart": [
+    {
+      "apply": [
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_floor0"
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_floor1"
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side0"
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side1"
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt0"
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt1"
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side0",
+          "y": 90
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side1",
+          "y": 90
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt0",
+          "y": 90
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt1",
+          "y": 90
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side0",
+          "y": 180
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side1",
+          "y": 180
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt0",
+          "y": 180
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt1",
+          "y": 180
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side0",
+          "y": 270
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side1",
+          "y": 270
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt0",
+          "y": 270
+        },
+        {
+          "model": "jabsfixedmobsandblocks:block/copper_fire_side_alt1",
+          "y": 270
+        }
+      ]
+    }
+  ]
+}

@@ -1,14 +1,25 @@
 {
-	"required": true,
-	"package": "net.greenjab.jabsfixedmobsandblocks.client.mixin",
-	"compatibilityLevel": "JAVA_25",
-	"client": [
-		"ExampleClientMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
-	}
+  "required": true,
+  "package": "net.greenjab.jabsfixedmobsandblocks.client.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "mixins": [
+    "LayerDefinitionsMixin",
+    "particle.ClientPacketListenerMixin",
+    "particle.ElderGuardianParticleMixin",
+    "particle.ElderGuardianParticleRenderStateMixin",
+    "particle.MinecraftMixin",
+    "particle.ParticleResourcesMixin",
+    "villager.LivingEntityRendererMixin",
+    "villager.MerchantScreenMixin",
+    "villager.VillagerEntityRendererMixin",
+    "villager.VillagerProfessionLayerMixin",
+    "villager.VillagerRenderStateMixin",
+    "villager.ZombieVillagerModelMixin"
+  ]
 }
