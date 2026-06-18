@@ -22,11 +22,5 @@
     "item.minecraft.music_disc_lava_chicken":"Music Disc \u00a7f(\ueff59)",
     "advancements.husbandry.allay_deliver_cake_to_note_block.description": "Have an Allay drop a Cookie at a Note Block",
     "advancements.husbandry.plant_any_sniffer_seed.description": "Plant all Sniffer Seeds",
-    "advancements.adventure.very_very_frightening.description": "Strike a Creeper with Lightning",
-    "merchant.level.1": "Novice",
-    "merchant.level.2": "Adept",
-    "merchant.level.3": "Skilled",
-    "merchant.level.4": "Expert",
-    "merchant.level.5": "Master",
-    "merchant.title": "%s %s"
+    "advancements.adventure.very_very_frightening.description": "Strike a Creeper with Lightning"
 }
