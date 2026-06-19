@@ -35,10 +35,10 @@ public class JabsFixedMobsAndBlocks implements ModInitializer {
 
 		VillagerNeedsPayload.register();
 
+		BlockRegistry.registerFireBlocks();
 		ItemRegistry.registerItems();
 		ItemGroupRegistry.register();
 		GameRuleRegistry.registerGameRules();
-		BlockRegistry.registerFireBlocks();
 		LootTableRegistry.registerLootTable();
 		MobEffectRegistry.registerMobEffects();
 		ParticleRegistry.registerParticles();

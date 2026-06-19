@@ -19,8 +19,5 @@
     "item.minecraft.music_disc_precipice":"Music Disc \u00a7f(\ueff513)",
     "item.minecraft.music_disc_relic":"Music Disc \u00a7f(\ueff514)",
     "item.minecraft.music_disc_tears":"Music Disc \u00a7f(\ueff510)",
-    "item.minecraft.music_disc_lava_chicken":"Music Disc \u00a7f(\ueff59)",
-    "advancements.husbandry.allay_deliver_cake_to_note_block.description": "Have an Allay drop a Cookie at a Note Block",
-    "advancements.husbandry.plant_any_sniffer_seed.description": "Plant all Sniffer Seeds",
-    "advancements.adventure.very_very_frightening.description": "Strike a Creeper with Lightning"
+    "item.minecraft.music_disc_lava_chicken":"Music Disc \u00a7f(\ueff59)"
 }
