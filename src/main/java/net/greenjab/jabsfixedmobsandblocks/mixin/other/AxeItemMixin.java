@@ -28,7 +28,7 @@ public abstract class AxeItemMixin {
     private void addScrapedCopper(Level level, BlockPos pos, @Nullable Player player,
                                   BlockState oldState, CallbackInfoReturnable<Optional<BlockState>> cir) {
         if (level instanceof ServerLevel serverWorld && oldState.isCollisionShapeFullBlock(level, pos) && level.getRandom().nextFloat()<0.3f) {
-            Identifier lootTableId = JabsFixedMobsAndBlocks.id("gameplay/other/scrape");
+            Identifier lootTableId = JabsFixedMobsAndBlocks.id("gameplay/scrape");
             Block.dropFromBlockInteractLootTable(
                     serverWorld,
                     ResourceKey.create(Registries.LOOT_TABLE, lootTableId),

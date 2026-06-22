@@ -42,6 +42,7 @@
     "phantom.ClearAllStatusEffectsConsumeEffectMixin",
     "phantom.EntityMixin",
     "phantom.LivingEntityMixin",
+    "phantom.MobMixin",
     "phantom.PhantomAttackStrategyGoalMixin",
     "phantom.PhantomCircleAroundAnchorGoalMixin",
     "phantom.PhantomMixin",

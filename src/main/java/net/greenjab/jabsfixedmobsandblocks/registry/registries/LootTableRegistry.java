@@ -10,7 +10,7 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 
 public class LootTableRegistry {
-    public static final ResourceKey<LootTable> SUPER_CHARGED_CREEPER_PLAYER_LOOT_TABLE = registerLoot_Table("gameplay/other/super_charged_creeper_player");
+    public static final ResourceKey<LootTable> SUPER_CHARGED_CREEPER_PLAYER_LOOT_TABLE = registerLoot_Table("gameplay/super_charged_creeper_player");
 
     private static ResourceKey<LootTable> registerLoot_Table(String id) {
         return registerLootTable(ResourceKey.create(Registries.LOOT_TABLE, JabsFixedMobsAndBlocks.id(id)));
