@@ -2,6 +2,7 @@ package net.greenjab.jabsfixedmobsandblocks.registry.registries;
 
 import net.greenjab.jabsfixedmobsandblocks.registry.item.PatinaItem;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
+import net.greenjab.jabsfixedmobsandblocks.registry.other.BaitComponent;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -25,6 +26,7 @@ public class ItemRegistry {
     public static final Item DISPENSER_MINECART = register(
             "dispenser_minecart", settings -> new MinecartItem(EntityTypeRegistry.DISPENCER_MINECART_ENTITY_TYPE, settings), new Item.Properties().stacksTo(1)
     );
+    public static final Item GOLDEN_FERMENTED_SPIDER_EYE = register("golden_fermented_spider_eye", new Item.Properties().component(ComponentRegistry.BAIT_POWER, new BaitComponent(3)));
 
     public static final Item AZALEA_PLANKS = register(BlockRegistry.AZALEA_PLANKS);
     public static final Item AZALEA_LOG = register(BlockRegistry.AZALEA_LOG);
@@ -91,6 +93,9 @@ public class ItemRegistry {
     }
 
 
+    private static Item register(final String name, final Item.Properties properties) {
+        return register(name, Item::new, properties);
+    }
     public static Item register(String id, Function<Item.Properties, Item> factory, Item.Properties settings) {
         return register(keyOf(id), factory, settings);
     }

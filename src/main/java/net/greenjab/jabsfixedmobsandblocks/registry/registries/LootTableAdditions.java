@@ -28,8 +28,7 @@ public class LootTableAdditions {
                         LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PLAYER)));
                 LootPool.Builder poolBuilder = LootPool.lootPool().add(NestedLootTable.lootTableReference(LootTableRegistry.SUPER_CHARGED_CREEPER_PLAYER_LOOT_TABLE).when(predicate));
                 tableBuilder.pool(poolBuilder.build());
-            }
-            if (key==EntityType.CREEPER.getDefaultLootTable().get()) {
+            } else if (key==EntityType.CREEPER.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_PIGSTEP))
                         .when(LootItemEntityPropertyCondition.hasProperties(
@@ -39,18 +38,22 @@ public class LootTableAdditions {
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_OTHERSIDE))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.SHULKER))).build());
-            }
-            if (key==EntityType.SNIFFER.getDefaultLootTable().get()) {
+            } else if (key==EntityType.SNIFFER.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_RELIC))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.CREEPER))).build());
-            }
-            if (key==EntityType.WARDEN.getDefaultLootTable().get()) {
+            } else if (key==EntityType.WARDEN.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_5))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.CREEPER))).build());
+            } else if (key==EntityType.ELDER_GUARDIAN.getDefaultLootTable().get()) {
+                tableBuilder.pool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(2))
+                        .add(LootItem.lootTableItem(Items.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE))
+                        .add(LootItem.lootTableItem(Items.AIR))
+                        .build());
             }
         });
     }

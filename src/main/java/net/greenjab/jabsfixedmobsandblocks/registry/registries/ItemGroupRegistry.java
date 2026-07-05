@@ -17,6 +17,7 @@ public class ItemGroupRegistry {
                         entries.accept(ItemRegistry.PATINA);
                         entries.accept(ItemRegistry.REDSTONE_LANTERN);
                          entries.accept(ItemRegistry.DISPENSER_MINECART);
+                         entries.accept(ItemRegistry.GOLDEN_FERMENTED_SPIDER_EYE);
 
                          entries.accept(BlockRegistry.AZALEA_PLANKS);
                          entries.accept(BlockRegistry.AZALEA_LOG);

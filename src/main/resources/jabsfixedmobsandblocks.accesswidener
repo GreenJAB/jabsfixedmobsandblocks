@@ -20,3 +20,4 @@ accessible method net/minecraft/world/level/block/Block dropFromBlockInteractLoo
 accessible class net/minecraft/world/level/block/entity/SculkSensorBlockEntity$VibrationUser
 accessible method net/minecraft/world/level/block/entity/DispenserBlockEntity setItems (Lnet/minecraft/core/NonNullList;)V
 accessible field net/minecraft/world/entity/vehicle/minecart/AbstractMinecart behavior Lnet/minecraft/world/entity/vehicle/minecart/MinecartBehavior;
+accessible field net/minecraft/world/entity/item/ItemEntity age I

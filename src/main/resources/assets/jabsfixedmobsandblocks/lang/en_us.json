@@ -49,5 +49,7 @@
     "entity.jabsfixedmobsandblocks.villager.unemployed": "%s: This would be a lovely day to work, if I had a job",
     "entity.jabsfixedmobsandblocks.villager.trade": "%s: Would you like to trade?",
     "entity.jabsfixedmobsandblocks.villager.wandering": "%s: Some may call this junk. Me, I call them treasures",
-    "entity.jabsfixedmobsandblocks.villager.failed_UI": "Error, Close and Reopen Villager UI"
+    "entity.jabsfixedmobsandblocks.villager.failed_UI": "Error, Close and Reopen Villager UI",
+    "component.jabsfixedmobsandblocks.bait": "Bait Level: %s",
+    "item.jabsfixedmobsandblocks.golden_fermented_spider_eye": "Golden Fermented Spider Eye"
 }

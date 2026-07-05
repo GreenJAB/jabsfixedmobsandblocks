@@ -34,7 +34,7 @@ public class JabsFixedMobsAndBlocks implements ModInitializer {
 		LOGGER.info("Initializing " + MOD_NAME);
 
 		VillagerNeedsPayload.register();
-
+		ComponentRegistry.registerComponent();
 		BlockRegistry.registerFireBlocks();
 		ItemRegistry.registerItems();
 		ItemGroupRegistry.register();

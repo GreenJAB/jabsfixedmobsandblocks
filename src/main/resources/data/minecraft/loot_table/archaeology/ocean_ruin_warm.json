@@ -1,0 +1,46 @@
+{
+    "type": "minecraft:archaeology",
+    "pools": [
+        {
+            "bonus_rolls": 0,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:angler_pottery_sherd"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:shelter_pottery_sherd"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:snort_pottery_sherd"
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:sniffer_egg",
+                    "weight": 2
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:emerald",
+                    "weight": 2
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:book",
+                    "weight": 2,
+                    "functions": [
+                        {
+                            "function": "minecraft:enchant_with_levels",
+                            "levels": 20,
+                            "options": "#minecraft:on_random_loot"
+                        }
+                    ]
+                }
+            ],
+            "rolls": 1
+        }
+    ],
+    "random_sequence": "minecraft:archaeology/ocean_ruin_warm"
+}
