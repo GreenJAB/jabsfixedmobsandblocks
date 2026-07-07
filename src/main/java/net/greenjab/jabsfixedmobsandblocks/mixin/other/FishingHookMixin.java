@@ -77,7 +77,7 @@ public abstract class FishingHookMixin {
 
         //https://www.desmos.com/calculator/xgxywuavpe
 
-        if (level.getRandom().nextInt(100)<this.luck*5+100) {
+        if (level.getRandom().nextInt(100)<this.luck*5) {
             List<String> fish = List.of("cod", "salmon", "tropical_fish");
             List<String> common = List.of("squid", "glow_squid", "tadpole");
             List<String> rare = List.of("turtle", "dolphin", "axolotl", "nautilus");
@@ -169,11 +169,10 @@ public abstract class FishingHookMixin {
         if (!(entity instanceof LivingEntity || entity instanceof ItemEntity)) return;
         FishingHook FBE = (FishingHook)(Object)this;
         Level level = FBE.level();
-        ItemEntity fakeItem = new ItemEntity(level, FBE.getX(), FBE.getY(), FBE.getZ(), Items.AIR.getDefaultInstance());
+        ItemEntity fakeItem = new ItemEntity(level, FBE.getX(), entity.getY()+1, FBE.getZ(), Items.AIR.getDefaultInstance());
         if (fakeItem != null) {
-            fakeItem.snapTo(FBE.getX(), FBE.getY(), FBE.getZ(), 0, 0.0F);
             double xa = FBE.getOwner().getX() - FBE.getX();
-            double ya = FBE.getOwner().getY() - FBE.getY()+0.5;
+            double ya = FBE.getOwner().getY() - (entity.getY()+1)+0.5;
             double za = FBE.getOwner().getZ() - FBE.getZ();
             double speed = 0.1;
             fakeItem.setDeltaMovement(xa * speed, ya * speed + Math.sqrt(Math.sqrt(xa * xa + ya * ya + za * za)) * 0.08, za * speed);
