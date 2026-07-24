@@ -67,6 +67,7 @@
     "redstone.DaylightDetectorBlockMixin",
     "redstone.DefaultDispenseItemBehaviorMixin",
     "redstone.DispenseItemBehaviorMixin",
+    "redstone.DoorBlockMixin",
     "redstone.ItemContainerContentsMixin",
     "redstone.JungleTemplePieceMixin",
     "redstone.NoteBlockMixin",

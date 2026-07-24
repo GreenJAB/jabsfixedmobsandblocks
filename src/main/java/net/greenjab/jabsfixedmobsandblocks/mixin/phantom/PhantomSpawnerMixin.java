@@ -1,6 +1,7 @@
 package net.greenjab.jabsfixedmobsandblocks.mixin.phantom;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.MobEffectRegistry;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +54,7 @@ public abstract class PhantomSpawnerMixin {
                                        @Local ServerPlayer player) {
         ServerStatsCounter serverStatHandler = player.getStats();
         int j = Mth.clamp(serverStatHandler.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
-        if (j<168000) return;
+        if (j<24000*level.getGameRules().get(GameRuleRegistry.NIGHTS_UNTIL_INSOMNIA)) return;
         if (!player.hasEffect(MobEffectRegistry.INSOMNIA)) {
             player.addEffect(new MobEffectInstance(MobEffectRegistry.INSOMNIA, -1, 0, true, false, true));
             player.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.GUARDIAN_ELDER_EFFECT, 2f));

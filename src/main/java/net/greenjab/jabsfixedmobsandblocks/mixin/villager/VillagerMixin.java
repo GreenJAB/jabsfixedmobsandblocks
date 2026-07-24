@@ -1,10 +1,12 @@
 package net.greenjab.jabsfixedmobsandblocks.mixin.villager;
 
+import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.greenjab.jabsfixedmobsandblocks.network.VillagerNeedsPayload;
+import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.MemoryRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.villager.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -36,7 +39,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -96,9 +98,10 @@ public abstract class VillagerMixin extends AbstractVillager {
         return true;
     }
 
-    @Redirect(method = "spawnGolemIfNeeded", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I"))
-    private int summon1GolemPerHostileMob(List<Villager> instance, @Local(argsOnly = true) int villagersNeededToAgree) {
-        if (instance.size() >= villagersNeededToAgree) {
+    @ModifyExpressionValue(method = "spawnGolemIfNeeded", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I"))
+    private int summon1GolemPerHostileMob(int original, @Local(argsOnly = true) int villagersNeededToAgree) {
+        if (!JabsFixedMobsAndBlocks.SERVER.getGameRules().get(GameRuleRegistry.ONE_IRON_GOLEM_PER_MOB)) return original;
+        if (original >= villagersNeededToAgree) {
             if (this.getBrain().hasMemoryValue(MemoryModuleType.NEAREST_HOSTILE)) {
                 LivingEntity enemy = this.getBrain().getMemoryInternal(MemoryModuleType.NEAREST_HOSTILE).get();
                 if (enemy.entityTags().contains("iron_golem")) return 0;
@@ -108,7 +111,7 @@ public abstract class VillagerMixin extends AbstractVillager {
                 }
             }
         }
-        return instance.size();
+        return original;
     }
 
     @Inject(method = "onReputationEventFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/gossip/GossipContainer;add(Ljava/util/UUID;Lnet/minecraft/world/entity/ai/gossip/GossipType;I)V", ordinal = 2))
@@ -148,6 +151,14 @@ public abstract class VillagerMixin extends AbstractVillager {
         foodLevel = 10;
     }
 
+    @ModifyExpressionValue(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableMap;of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap;", ordinal = 0))
+    private static  ImmutableMap<Object, Object> betterFoodPoints(ImmutableMap<Item, Integer> original){
+        return ImmutableMap.builder().put(Items.APPLE, 4).put(Items.MELON_SLICE, 2).put(Items.SWEET_BERRIES, 2).put(Items.GLOW_BERRIES, 2)
+                .put(Items.CARROT, 3).put(Items.POTATO, 2).put(Items.BAKED_POTATO, 5).put(Items.BEETROOT, 2).put(Items.DRIED_KELP, 1)
+                .put(Items.BREAD, 5).put(Items.COOKIE, 2).put(Items.PUMPKIN_PIE, 8).put(Items.MUSHROOM_STEW, 6).put(Items.BEETROOT_SOUP, 6)
+                .put(Items.HONEY_BOTTLE, 3).build();
+    }
+
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void saveCustomData(ValueOutput output, CallbackInfo ci) {
         Optional<Integer> gossipTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_GOSSIP);
@@ -183,41 +194,58 @@ public abstract class VillagerMixin extends AbstractVillager {
     @Inject(method = "tick", at = @At("HEAD"))
     private void increaseStats(CallbackInfo ci){
         if (this.level() instanceof ServerLevel serverLevel && serverLevel.getGameRules().get(GameRules.ADVANCE_TIME) && !this.isBaby()) {
-            this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_GOSSIP, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0)+1);
-            this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_SLEEP, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0)+1);
-            this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_WALK, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0)+1);
-            this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_EAT, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0)+1);
-            this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_SUN, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0)+1);
-
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0)%24000==0) tryEat();
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0)%21==0)
-                if (this.level().getBrightness(LightLayer.SKY, this.blockPosition())!=0)
-                    this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_SUN, 0);
-
-            if (this.getDeltaMovement().horizontalDistanceSqr()>0)
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FRIENDS))
+                this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_GOSSIP, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0)+1);
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SLEEP))
+                this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_SLEEP, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0)+1);
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SPACE)) {
+                this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_WALK, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0) + 1);
                 if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0)>1200)
-                    if (this.getBrain().hasMemoryValue(MemoryModuleType.WALK_TARGET)) {
-                        Vec3 v = this.getBrain().getMemory(MemoryModuleType.WALK_TARGET).get().getTarget().currentPosition();
-                        if (v.distanceToSqr(this.position())>64)
-                            this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_WALK, 0);
-                    }
+                    if (this.getBrain().hasMemoryValue(MemoryModuleType.WALK_TARGET))
+                        if (this.getDeltaMovement().horizontalDistanceSqr()>0) {
+                            Vec3 v = this.getBrain().getMemory(MemoryModuleType.WALK_TARGET).get().getTarget().currentPosition();
+                            if (v.distanceToSqr(this.position()) > 64)
+                                this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_WALK, 0);
+                        }
+            }
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FOOD)) {
+                this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_EAT, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0) + 1);
+                if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0) % 24000 == 0) tryEat();
+            }
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SUNLIGHT)) {
+                this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_SUN, this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0) + 1);
+                if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0)%21==0)
+                    if (this.level().getBrightness(LightLayer.SKY, this.blockPosition())!=0)
+                        this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_SUN, 0);
+            }
         }
     }
 
     @Inject(method = "updateSpecialPrices", at = @At("TAIL"))
     private void happiness(Player player, CallbackInfo ci) {
         double add = 0;
-
-        Optional<Integer> gossipTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_GOSSIP);
-        if (gossipTime!=null && gossipTime.isPresent() && gossipTime.get() > 48000) add+=5*(gossipTime.get() - 48000) / 24000.0;
-        Optional<Integer> sleepTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_SLEEP);
-        if (sleepTime!=null && sleepTime.isPresent() && sleepTime.get() > 48000) add+=5*(sleepTime.get() - 48000) / 24000.0;
-        Optional<Integer> walkTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_WALK);
-        if (walkTime!=null && walkTime.isPresent() && walkTime.get() > 48000) add+=5*(walkTime.get() - 48000) / 24000.0;
-        Optional<Integer> eatTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_EAT);
-        if (eatTime!=null && eatTime.isPresent() && eatTime.get() > 48000) add+=5*(eatTime.get() - 48000) / 24000.0;
-        Optional<Integer> sunTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_SUN);
-        if (sunTime!=null && sunTime.isPresent() && sunTime.get() > 48000) add+=5*(sunTime.get() - 48000) / 24000.0;
+        if (player.level() instanceof ServerLevel serverLevel) {
+            Optional<Integer> gossipTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_GOSSIP);
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FRIENDS))
+                if (gossipTime != null && gossipTime.isPresent() && gossipTime.get() > 48000)
+                    add += 5 * (gossipTime.get() - 48000) / 24000.0;
+            Optional<Integer> sleepTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_SLEEP);
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SLEEP))
+                if (sleepTime != null && sleepTime.isPresent() && sleepTime.get() > 48000)
+                    add += 5 * (sleepTime.get() - 48000) / 24000.0;
+            Optional<Integer> walkTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_WALK);
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SPACE))
+                if (walkTime != null && walkTime.isPresent() && walkTime.get() > 48000)
+                    add += 5 * (walkTime.get() - 48000) / 24000.0;
+            Optional<Integer> eatTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_EAT);
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FOOD))
+                if (eatTime != null && eatTime.isPresent() && eatTime.get() > 48000)
+                    add += 5 * (eatTime.get() - 48000) / 24000.0;
+            Optional<Integer> sunTime = this.getBrain().getMemoryInternal(MemoryRegistry.TIME_SINCE_SUN);
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SUNLIGHT))
+                if (sunTime != null && sunTime.isPresent() && sunTime.get() > 48000)
+                    add += 5 * (sunTime.get() - 48000) / 24000.0;
+        }
 
         for (MerchantOffer tradeOffer : this.getOffers()) {
             tradeOffer.addToSpecialPriceDiff((int) add);
@@ -229,49 +257,59 @@ public abstract class VillagerMixin extends AbstractVillager {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(Items.VILLAGER_SPAWN_EGG) || !this.isAlive() || this.isTrading() || this.isSleeping()) return;
 
-        if (player instanceof ServerPlayer serverPlayer) {
+        if (player instanceof ServerPlayer serverPlayer && level() instanceof ServerLevel serverLevel) {
             if (this.isBaby()) {
                 cancel(serverPlayer, "baby", cir); return; }
 
             if (this.getVillagerData().profession().is(VillagerProfession.NITWIT)) {
                 cancel(serverPlayer, "nitwit", cir); return; }
-
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0) > 168000) {
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FOOD) &&
+                    this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0) > 168000) {
                 if (!tryEat())
                     cancel(serverPlayer, "very_hungry", cir); return; }
 
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0) > 168000) {
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SLEEP) &&
+                    this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_tired", cir); return; }
 
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0) > 168000) {
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SUNLIGHT) &&
+                    this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_dark", cir); return; }
 
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0) > 168000) {
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SPACE) &&
+                    this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_lazy", cir); return; }
 
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0) > 168000) {
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FRIENDS) &&
+                    this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_lonely", cir); return; }
 
-            if (player.level().isDarkOutside()) {
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_TRADE_AT_NIGHT) &&
+                    player.level().isDarkOutside()) {
                 cancel(serverPlayer, "night", cir); return; }
 
             if (this.getOffers().isEmpty()) {
                 cancel(serverPlayer, "unemployed", cir); return; }
 
             boolean sentChat = false;
-            if (this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0)>48000)
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FOOD) &&
+                    this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "hungry");
 
-            if (!sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0)>48000)
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SLEEP) &&
+                    !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "tired");
 
-            if (!sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0)>48000)
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SUNLIGHT) &&
+                    !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "dark");
 
-            if (!sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0)>48000)
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SPACE) &&
+                    !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "lazy");
 
-            if (!sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0)>48000)
+            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FRIENDS) &&
+                    !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "lonely");
 
             if (!sentChat) ServerPlayNetworking.send(serverPlayer, new VillagerNeedsPayload(this.uuid, "trade"));

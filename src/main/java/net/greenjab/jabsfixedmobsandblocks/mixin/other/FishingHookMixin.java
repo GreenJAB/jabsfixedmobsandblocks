@@ -139,7 +139,7 @@ public abstract class FishingHookMixin {
                 .reloadableRegistries()
                 .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, lootTableId));
 
-        LootParams lootContextParameterSet = (new LootParams.Builder((ServerLevel)FBE.level())).withParameter(LootContextParams.ORIGIN, FBE.position()).withParameter(LootContextParams.TOOL, rod).withParameter(LootContextParams.THIS_ENTITY, FBE).withLuck(/*(float)this.luckOfTheSeaLevel +*/ playerEntity.getLuck()).create(LootContextParamSets.FISHING);
+        LootParams lootContextParameterSet = (new LootParams.Builder((ServerLevel)level)).withParameter(LootContextParams.ORIGIN, FBE.position()).withParameter(LootContextParams.TOOL, rod).withParameter(LootContextParams.THIS_ENTITY, FBE).withLuck(playerEntity.getLuck()).create(LootContextParamSets.FISHING);
 
         ObjectArrayList<ItemStack> loots = lootTable.getRandomItems(lootContextParameterSet);
         if (loots.isEmpty()) return Items.DIRT.getDefaultInstance();

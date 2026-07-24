@@ -1,6 +1,7 @@
 package net.greenjab.jabsfixedmobsandblocks.mixin.mobs;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -54,6 +55,7 @@ public abstract class ZombieMixin extends Monster {
 
     @ModifyArg(method = "killedEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/zombie/Zombie;convertVillagerToZombieVillager(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/npc/villager/Villager;)Z"), index = 1)
     private Villager villagerIntoNitwit(Villager villager, @Local(argsOnly = true) ServerLevel level){
+        if (!level.getGameRules().get(GameRuleRegistry.VILLAGERS_NITWITIFY_ON_ZOMBIFICATION)) return villager;
         if (level.getDifficulty() == Difficulty.NORMAL || level.getDifficulty() == Difficulty.HARD) {
             if (level.getDifficulty() == Difficulty.HARD) {
                 villager.setVillagerData(villager.getVillagerData().withProfession(BuiltInRegistries.VILLAGER_PROFESSION.getOrThrow(VillagerProfession.NITWIT)));
