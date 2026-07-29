@@ -6,6 +6,7 @@
     "MinecraftServerMixin",
     "mobs.AllayMixin",
     "mobs.BeeMixin",
+    "mobs.BucketItemMixin",
     "mobs.DyeItemMixin",
     "mobs.EatBlockGoalMixin",
     "mobs.EndCityPieceMixin",

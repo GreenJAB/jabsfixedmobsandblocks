@@ -48,29 +48,17 @@ import java.util.Optional;
 @Mixin(Villager.class)
 public abstract class VillagerMixin extends AbstractVillager {
 
-    @Shadow
-    protected abstract void setUnhappy();
-
-    @Shadow
-    protected abstract void startTrading(Player player);
-
-    @Shadow
-    public abstract VillagerData getVillagerData();
-
-    @Shadow
-    private int foodLevel;
-
-    @Shadow
-    protected abstract void eatUntilFull();
+    @Shadow protected abstract void setUnhappy();
+    @Shadow protected abstract void startTrading(Player player);
+    @Shadow public abstract VillagerData getVillagerData();
+    @Shadow private int foodLevel;
+    @Shadow protected abstract void eatUntilFull();
 
     public VillagerMixin(EntityType<? extends VillagerMixin> entityType, Level world) {
         super(entityType, world);
     }
 
-    @ModifyExpressionValue(method = "makeBrain", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/ai/Brain$Provider;makeBrain(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/world/entity/ai/Brain;"
-    ))
+    @ModifyExpressionValue(method = "makeBrain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/Brain$Provider;makeBrain(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/world/entity/ai/Brain;"))
     private <E extends LivingEntity> Brain<E> addMemories(Brain<E> original){
         original.registerMemory(MemoryRegistry.TIME_SINCE_GOSSIP);
         original.registerMemory(MemoryRegistry.TIME_SINCE_SLEEP);
@@ -80,10 +68,7 @@ public abstract class VillagerMixin extends AbstractVillager {
         return original;
     }
 
-    @ModifyExpressionValue(method = "refreshBrain", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/ai/Brain$Provider;makeBrain(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/world/entity/ai/Brain;"
-    ))
+    @ModifyExpressionValue(method = "refreshBrain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/Brain$Provider;makeBrain(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/world/entity/ai/Brain;"))
     private <E extends LivingEntity> Brain<E> addMemories2(Brain<E> original){
         original.registerMemory(MemoryRegistry.TIME_SINCE_GOSSIP);
         original.registerMemory(MemoryRegistry.TIME_SINCE_SLEEP);
@@ -119,34 +104,27 @@ public abstract class VillagerMixin extends AbstractVillager {
         if (this.isPassenger()) {
             Entity vehicle = this.getVehicle();
             assert vehicle != null;
-            if (vehicle.getType() == EntityType.CAMEL) {
-                this.stopRiding();
-            }
+            if (vehicle.getType() == EntityType.CAMEL) this.stopRiding();
         } else {
             if (source.isPassenger()) {
                 Entity vehicle = source.getVehicle();
                 assert vehicle != null;
                 if (vehicle.getType() == EntityType.CAMEL) {
                     List<Entity> passengers = vehicle.getPassengers();
-                    if (passengers.size() == 1) {
-                        this.startRiding(vehicle);
-                    }
+                    if (passengers.size() == 1) this.startRiding(vehicle);
                 }
             }
         }
     }
 
-    @Unique
-    private boolean tryEat() {
+    @Unique private boolean tryEat() {
         eatUntilFull();
         if (foodLevel<=0) return false;
         foodLevel--;
         return true;
     }
 
-    @Inject(method = "<init>(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Holder;)V", at = @At(
-            "TAIL"
-    ))
+    @Inject(method = "<init>(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Holder;)V", at = @At("TAIL"))
     private void startWithFood(EntityType<? extends Villager> entityType, Level level, Holder<VillagerType> type, CallbackInfo ci){
         foodLevel = 10;
     }
@@ -246,7 +224,6 @@ public abstract class VillagerMixin extends AbstractVillager {
                 if (sunTime != null && sunTime.isPresent() && sunTime.get() > 48000)
                     add += 5 * (sunTime.get() - 48000) / 24000.0;
         }
-
         for (MerchantOffer tradeOffer : this.getOffers()) {
             tradeOffer.addToSpecialPriceDiff((int) add);
         }
@@ -260,34 +237,27 @@ public abstract class VillagerMixin extends AbstractVillager {
         if (player instanceof ServerPlayer serverPlayer && level() instanceof ServerLevel serverLevel) {
             if (this.isBaby()) {
                 cancel(serverPlayer, "baby", cir); return; }
-
             if (this.getVillagerData().profession().is(VillagerProfession.NITWIT)) {
                 cancel(serverPlayer, "nitwit", cir); return; }
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FOOD) &&
                     this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0) > 168000) {
                 if (!tryEat())
                     cancel(serverPlayer, "very_hungry", cir); return; }
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SLEEP) &&
                     this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_tired", cir); return; }
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SUNLIGHT) &&
                     this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_dark", cir); return; }
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SPACE) &&
                     this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_lazy", cir); return; }
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FRIENDS) &&
                     this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0) > 168000) {
                 cancel(serverPlayer, "very_lonely", cir); return; }
-
-            if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_TRADE_AT_NIGHT) &&
+            if (!serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_TRADE_AT_NIGHT) &&
                     player.level().isDarkOutside()) {
                 cancel(serverPlayer, "night", cir); return; }
-
             if (this.getOffers().isEmpty()) {
                 cancel(serverPlayer, "unemployed", cir); return; }
 
@@ -295,63 +265,49 @@ public abstract class VillagerMixin extends AbstractVillager {
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FOOD) &&
                     this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_EAT).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "hungry");
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SLEEP) &&
                     !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SLEEP).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "tired");
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SUNLIGHT) &&
                     !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_SUN).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "dark");
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_SPACE) &&
                     !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_WALK).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "lazy");
-
             if (serverLevel.getGameRules().get(GameRuleRegistry.VILLAGERS_NEED_FRIENDS) &&
                     !sentChat && this.getBrain().getMemory(MemoryRegistry.TIME_SINCE_GOSSIP).orElse(0)>48000)
                 sentChat = warning(serverPlayer, "lonely");
-
             if (!sentChat) ServerPlayNetworking.send(serverPlayer, new VillagerNeedsPayload(this.uuid, "trade"));
-
             player.awardStat(Stats.TALKED_TO_VILLAGER);
             this.startTrading(player);
         }
-
         cir.setReturnValue(InteractionResult.SUCCESS);
     }
 
-    @Unique
-    private boolean warning(ServerPlayer serverPlayer, String reason) {
+    @Unique private boolean warning(ServerPlayer serverPlayer, String reason) {
         ServerPlayNetworking.send(serverPlayer, new VillagerNeedsPayload(this.uuid, reason));
         return true;
     }
 
-    @Unique
-    private void cancel(ServerPlayer serverPlayer, String reason, CallbackInfoReturnable<InteractionResult> cir) {
+    @Unique private void cancel(ServerPlayer serverPlayer, String reason, CallbackInfoReturnable<InteractionResult> cir) {
         this.setUnhappy();
         ServerPlayNetworking.send(serverPlayer, new VillagerNeedsPayload(this.uuid, reason));
         cir.setReturnValue(InteractionResult.CONSUME);
     }
 
-    @Unique
-    EquipmentSlot[] EQUIPMENT_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    @Unique EquipmentSlot[] EQUIPMENT_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     @Inject(method = "die", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/npc/villager/AbstractVillager;die(Lnet/minecraft/world/damagesource/DamageSource;)V"))
     private void dropArmor(DamageSource source, CallbackInfo ci) {
         if (this.level() instanceof ServerLevel serverWorld) {
-            for (ItemStack itemStack : JabsFixedMobsAndBlocks.getArmor(this)) {
-                this.spawnAtLocation(serverWorld, itemStack);
-            }
+            for (ItemStack itemStack : JabsFixedMobsAndBlocks.getArmor(this)) this.spawnAtLocation(serverWorld, itemStack);
             for (int i = 0; i < 4; i++) {
                 this.setItemSlot(EQUIPMENT_SLOT_ORDER[i], ItemStack.EMPTY);
                 i++;
             }
             for(int i = 0; i < this.getInventory().getContainerSize(); ++i) {
                 ItemStack itemStack = this.getInventory().getItem(i);
-                if (!itemStack.isEmpty()) {
-                    this.spawnAtLocation(serverWorld, itemStack);
-                }
+                if (!itemStack.isEmpty()) this.spawnAtLocation(serverWorld, itemStack);
             }
             this.getInventory().clearContent();
         }

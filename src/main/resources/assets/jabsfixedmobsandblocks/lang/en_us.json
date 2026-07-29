@@ -50,6 +50,7 @@
     "entity.jabsfixedmobsandblocks.villager.failed_UI": "Error, Close and Reopen Villager UI",
     "component.jabsfixedmobsandblocks.bait": "Bait Level: %s",
     "item.jabsfixedmobsandblocks.golden_fermented_spider_eye": "Golden Fermented Spider Eye",
+    "item.jabsfixedmobsandblocks.allay_bucket": "Bucket of Allay",
 
     "gamerule.category.jabsfixedmobsandblocks.aad_jabsfixedmobsandblocks": "Jabs Fixed Mobs and Blocks",
     "gamerule.jabsfixedmobsandblocks.peaceful_mob_griefing": "Allow Peaceful Mob actions",

@@ -4,28 +4,34 @@ import net.greenjab.jabsfixedmobsandblocks.registry.item.PatinaItem;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.greenjab.jabsfixedmobsandblocks.registry.other.BaitComponent;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.entity.vehicle.boat.ChestBoat;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluids;
+
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ItemRegistry {
 
-
+    public static final Item ALLAY_BUCKET = register("allay_bucket", settings ->
+                    new MobBucketItem(EntityType.ALLAY, Fluids.EMPTY, SoundEvents.BUCKET_EMPTY_AXOLOTL, settings),
+            new Item.Properties().stacksTo(1).component(DataComponents.BUCKET_ENTITY_DATA, CustomData.EMPTY));
     public static final Item PATINA = register("patina", PatinaItem::new, new Item.Properties());
     public static final Item REDSTONE_LANTERN = register(BlockRegistry.REDSTONE_LANTERN);
-    public static final Item DISPENSER_MINECART = register(
-            "dispenser_minecart", settings -> new MinecartItem(EntityTypeRegistry.DISPENCER_MINECART_ENTITY_TYPE, settings), new Item.Properties().stacksTo(1)
-    );
+    public static final Item DISPENSER_MINECART = register("dispenser_minecart", settings ->
+            new MinecartItem(EntityTypeRegistry.DISPENCER_MINECART_ENTITY_TYPE, settings), new Item.Properties().stacksTo(1));
     public static final Item GOLDEN_FERMENTED_SPIDER_EYE = register("golden_fermented_spider_eye", new Item.Properties().component(ComponentRegistry.BAIT_POWER, new BaitComponent(3)));
 
     public static final Item AZALEA_PLANKS = register(BlockRegistry.AZALEA_PLANKS);

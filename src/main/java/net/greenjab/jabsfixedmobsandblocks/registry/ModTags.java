@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.TradeSet;
 import net.minecraft.world.item.trading.TradeSets;
 import net.minecraft.world.level.block.Block;
@@ -16,4 +17,6 @@ public class ModTags {
     public static final TagKey<Item> STAINED_GLASS_PANE = TagKey.create(Registries.ITEM, JabsFixedMobsAndBlocks.id("stained_glass_pane"));
 
     public static final ResourceKey<TradeSet> WANDERING_TRADER_SPECIAL = TradeSets.resourceKey("wandering_trader/special");
+
+    public static final TagKey<Enchantment> FISHING_TREASURE_EBOOKS = TagKey.create(Registries.ENCHANTMENT, JabsFixedMobsAndBlocks.id("other/fishing_treasure"));
 }

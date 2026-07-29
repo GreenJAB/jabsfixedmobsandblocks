@@ -1,5 +1,7 @@
 package net.greenjab.jabsfixedmobsandblocks.mixin.phantom;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.MobEffectRegistry;
@@ -19,7 +21,6 @@ import net.minecraft.world.level.levelgen.PhantomSpawner;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -27,20 +28,18 @@ import java.util.List;
 @Mixin(PhantomSpawner.class)
 public abstract class PhantomSpawnerMixin {
 
-    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/stats/ServerStatsCounter;getValue(Lnet/minecraft/stats/Stat;)I"))
-    private int phantomSpawnByEffect(ServerStatsCounter instance, Stat<?> stat,
-                                     @Local ServerPlayer player, @Local(argsOnly = true) ServerLevel level) {
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/stats/ServerStatsCounter;getValue(Lnet/minecraft/stats/Stat;)I"))
+    private int phantomSpawnByEffect(ServerStatsCounter instance, Stat<?> stat, Operation<Integer> original, @Local ServerPlayer player, @Local(argsOnly = true) ServerLevel level) {
         if (!player.hasEffect(MobEffectRegistry.INSOMNIA)) return 0;
         List<Cat> list = level.getEntitiesOfClass(Cat.class, player.getBoundingBox().inflate(16.0), EntitySelector.ENTITY_STILL_ALIVE);
         if  (!list.isEmpty()) return 0;
         return 100000 * (1 + player.getEffect(MobEffectRegistry.INSOMNIA).getAmplifier());
     }
 
-    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Difficulty;getId()I"))
-    private int morePhantomsPerlevel(Difficulty instance,
-                                     @Local ServerPlayer player) {
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Difficulty;getId()I"))
+    private int morePhantomsPerlevel(Difficulty instance, Operation<Integer> original, @Local ServerPlayer player) {
         if (!player.hasEffect(MobEffectRegistry.INSOMNIA)) return 0;
-        return instance.getId() + player.getEffect(MobEffectRegistry.INSOMNIA).getAmplifier();
+        return original.call(instance) + player.getEffect(MobEffectRegistry.INSOMNIA).getAmplifier();
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;addFreshEntityWithPassengers(Lnet/minecraft/world/entity/Entity;)V"))

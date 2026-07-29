@@ -1,21 +1,28 @@
 package net.greenjab.jabsfixedmobsandblocks.registry.registries;
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityTypePredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
+import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+
+import static net.greenjab.jabsfixedmobsandblocks.registry.ModTags.FISHING_TREASURE_EBOOKS;
+import static net.greenjab.jabsfixedmobsandblocks.registry.registries.LootTableRegistry.FIXED_FISHING_TREASURE_LOOT_TABLE;
 
 public class LootTableAdditions {
 
@@ -54,6 +61,11 @@ public class LootTableAdditions {
                         .add(LootItem.lootTableItem(Items.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE))
                         .add(LootItem.lootTableItem(Items.AIR))
                         .build());
+            } else if (key==FIXED_FISHING_TREASURE_LOOT_TABLE && FabricLoader.getInstance().isModLoaded("jabsfixedenchanting")) {
+                HolderLookup.RegistryLookup<Enchantment> enchantments = holder.lookupOrThrow(Registries.ENCHANTMENT);
+                tableBuilder.modifyPools(builder -> builder
+                        .add(LootItem.lootTableItem(Items.BOOK).setWeight(10)
+                                .apply(new EnchantRandomlyFunction.Builder().withOneOf(enchantments.getOrThrow(FISHING_TREASURE_EBOOKS)))));
             }
         });
     }
