@@ -22,8 +22,7 @@ public class ClientSyncHandler {
             if (level != null) {
                 Entity entity = level.getEntity((payload.villager()));
                 if (entity instanceof Villager villager) {
-                    RandomSource random = villager.getRandom();
-                    Minecraft.getInstance().player.sendSystemMessage(Component.translatable("entity.jabsfixedmobsandblocks.villager."+payload.need(), villager.getName()));
+                    if (JabsFixedMobsAndBlocksClient.villagersSpeak.get()) Minecraft.getInstance().player.sendSystemMessage(Component.translatable("entity.jabsfixedmobsandblocks.villager."+payload.need(), villager.getName()));
 
                     SimpleParticleType particle = switch (payload.need()) {
                         case "hungry","very_hungry" -> ParticleRegistry.VILLAGER_HUNGRY;
@@ -36,6 +35,7 @@ public class ClientSyncHandler {
                     };
                     if (particle != null) {
                         Vec3 d = Minecraft.getInstance().player.position().subtract(villager.position()).horizontal().normalize();
+                        RandomSource random = villager.getRandom();
                         level.addAlwaysVisibleParticle(
                                 particle,
                                 true,

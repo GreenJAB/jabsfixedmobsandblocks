@@ -5,8 +5,11 @@ import net.greenjab.jabsfixedmobsandblocks.client.models.CustomModelLayers;
 import net.greenjab.jabsfixedmobsandblocks.client.registries.CustomEntityModelLayerRegistry;
 import net.greenjab.jabsfixedmobsandblocks.client.registries.EntityRendererRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.OptionInstance;
 
 public class JabsFixedMobsAndBlocksClient implements ClientModInitializer {
+
+	public static OptionInstance<Boolean> villagersSpeak = OptionInstance.createBoolean("options.chat.villagersSpeak", true);
 
 	@Override
 	public void onInitializeClient() {
