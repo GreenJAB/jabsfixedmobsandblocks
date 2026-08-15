@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Vous n'êtes pas assez fatigué pour dormir",
-    "effect.jabsfixedmobsandblocks.insomnia": "Insomnie",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Dormir nécessite l'insomnie",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Bien dormi",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Dormez avec Insomnie 5.",
     "filled_map.explorer" : "Carte d'exploration des %s",
     "component.jabsfixedmobsandblocks.bait": "Niveau d'appât: %s",
     "block.jabsfixedmobsandblocks.azalea_button": "Bouton en Azalée",

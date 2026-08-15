@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Você não pode dormir, não está cansado",
-    "effect.jabsfixedmobsandblocks.insomnia": "Insônia",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Necessário estar com Insônia para dormir",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Bem Descansado",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Durma com Insônia 5",
     "filled_map.explorer": "Mapa do Explorador de %s",
     "component.jabsfixedmobsandblocks.bait": "Nível de Isca: %s",
 

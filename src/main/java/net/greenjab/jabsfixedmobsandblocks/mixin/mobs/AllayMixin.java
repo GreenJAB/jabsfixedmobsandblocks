@@ -5,6 +5,7 @@ import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.ItemRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -55,7 +56,10 @@ public abstract class AllayMixin extends PathfinderMob implements Bucketable {
             ItemStack result = ItemUtils.createFilledResult(itemStack, player, bucket, false);
             player.setItemInHand(hand, result);
             Level level = pickupEntity.level();
-            if (!level.isClientSide()) CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, bucket);
+            if (!level.isClientSide()) {
+                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, bucket);
+                ((Allay) pickupEntity).dropEquipment((ServerLevel)level);
+            }
             pickupEntity.discard();
             return Optional.of(InteractionResult.SUCCESS);
         } else return Optional.empty();

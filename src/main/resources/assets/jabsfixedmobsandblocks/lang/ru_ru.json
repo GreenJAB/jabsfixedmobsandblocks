@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Вы недостаточно устали, чтобы спать",
-    "effect.jabsfixedmobsandblocks.insomnia": "Бессонница",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Бессонница необходима для сна",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Заряд бодрости",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Поспите с эффектом Бессонница 5",
     "filled_map.explorer" : "Карта исследователя %s",
     "component.jabsfixedmobsandblocks.bait": "Уровень приманки: %s",
     "block.jabsfixedmobsandblocks.azalea_button": "Азалияая кнопка",

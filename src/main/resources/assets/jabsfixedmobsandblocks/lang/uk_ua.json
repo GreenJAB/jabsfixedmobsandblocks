@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Ви не можете заснути, ви ще бадьорі",
-    "effect.jabsfixedmobsandblocks.insomnia": "Безсоння",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "У вас має бути безсоння, щоб заснути",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Переповнений силою",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Проспіть ніч з Безсонням 5",
     "filled_map.explorer": "Мапа дослідника %s",
     "component.jabsfixedmobsandblocks.bait": "Рівень наживки: %s",
     "block.jabsfixedmobsandblocks.azalea_button": "Азаліяа кнопка",

@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Du kannst nicht schlafen, du bist noch nicht müde genug",
-    "effect.jabsfixedmobsandblocks.insomnia": "Schlaflosigkeit",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Benötigt Schlaflosigkeit, um zu schlafen",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Gut geschlafen",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Schlafen mit Schlaflosigkeit 5",
     "filled_map.explorer" : "%s-Entdeckerkartep",
     "component.jabsfixedmobsandblocks.bait": "Köderstufe: %s",
     "block.jabsfixedmobsandblocks.azalea_button": "Azaleeholzknopf",

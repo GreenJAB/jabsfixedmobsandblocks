@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Nie możesz spać, nie jesteś zmęczony",
-    "effect.jabsfixedmobsandblocks.insomnia": "Bezsenność",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Potrzebujesz mieć bezsenność, aby spać",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Dobry Wypoczynek",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Prześpij noc z bezsennością 5",
     "filled_map.explorer" : "%s Mapa Odkrywcy",
     "component.jabsfixedmobsandblocks.bait": "Poziom przynęty: %s",
     "block.jabsfixedmobsandblocks.azalea_button": "Azaliay przycisk",

@@ -1,11 +1,6 @@
 {
     "itemgroup.jabsfixedmobsandblocks": "Fiksa",
-    "block.minecraft.bed.awake": "Du kan ikkje sove, du er ikkje trøytt",
-    "effect.jabsfixedmobsandblocks.insomnia": "Søvnløyse",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Må ha søvnløyse for å sove",
     "gamerule.jabsfixedmobsandblocks.peaceful_mob_griefing": "Tillat handlingar frå passive skapningar",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Godt utkvilt",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Sov med søvnløyse 5",
     "filled_map.explorer" : "Oppdagarkart over %s",
     "component.jabsfixedmobsandblocks.bait": "Agnkraft: %s",
     "item.jabsfixedmobsandblocks.azalea_boat": "Lyngrosebåt",

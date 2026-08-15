@@ -17,9 +17,6 @@ public class GameRuleRegistry {
 
     public static GameRule<Boolean> PEACEFUL_MOB_GRIEFING;
 
-    public static GameRule<Integer> NIGHTS_UNTIL_INSOMNIA;
-    public static GameRule<Boolean> INSOMNIA_SLEEP_REQUIREMENT;
-
     public static GameRule<Boolean> VILLAGERS_NEED_SLEEP;
     public static GameRule<Boolean> VILLAGERS_NEED_FOOD;
     public static GameRule<Boolean> VILLAGERS_NEED_SUNLIGHT;
@@ -35,9 +32,6 @@ public class GameRuleRegistry {
     public static void registerGameRules() {
         System.out.println("register GameRules");
         PEACEFUL_MOB_GRIEFING = registerBoolean2("peaceful_mob_griefing", GameRuleCategory.MOBS, true);
-
-        NIGHTS_UNTIL_INSOMNIA = registerInteger("nights_until_insomnia", 7, 0, Integer.MAX_VALUE);
-        INSOMNIA_SLEEP_REQUIREMENT = registerBoolean("insomnia_sleep_requirement", false);
 
         VILLAGERS_NEED_SLEEP = registerBoolean("villagers_need_sleep", true);
         VILLAGERS_NEED_FOOD = registerBoolean("villagers_need_food", true);

@@ -1,11 +1,6 @@
 {
     "itemgroup.jabsfixedmobsandblocks": "Fixed",
-    "block.minecraft.bed.awake": "疲れているときのみ寝ることができます",
-    "effect.jabsfixedmobsandblocks.insomnia": "不眠症",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "眠るために不眠症の状態が必要",
     "gamerule.jabsfixedmobsandblocks.peaceful_mob_griefing": "友好的なモブの行動を許可する",
-    "advancements.adventure.sleep_with_insomnia_5.title": "十分な休息",
-    "advancements.adventure.sleep_with_insomnia_5.description": "不眠症Vの状態で眠りにつく",
     "filled_map.explorer": "%s 探検家の地図",
     "component.jabsfixedmobsandblocks.bait": "エサのレベル: %s",
     "item.jabsfixedmobsandblocks.azalea_boat": "ツツジのボート",

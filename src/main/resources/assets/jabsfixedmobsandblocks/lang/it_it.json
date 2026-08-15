@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Non puoi riposare , Non sei stanco",
-    "effect.jabsfixedmobsandblocks.insomnia": "Insomnia",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Serve L’Insomnia Per Riposare",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Ben Riposato",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Riposati con Insomnia 5",
     "filled_map.explorer" : "%s Mappa da esploratore",
     "component.jabsfixedmobsandblocks.bait": "Livello dell'esca: %s",
     "item.jabsfixedmobsandblocks.azalea_boat": "Barca Di Azalea",

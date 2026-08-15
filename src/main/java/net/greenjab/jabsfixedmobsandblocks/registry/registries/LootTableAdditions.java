@@ -5,12 +5,14 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.EntityTypePredicate;
+import net.minecraft.advancements.criterion.LocationPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -40,21 +42,19 @@ public class LootTableAdditions {
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_PIGSTEP))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PIGLIN))).build());
-
-                tableBuilder.pool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_OTHERSIDE))
-                        .when(LootItemEntityPropertyCondition.hasProperties(
-                                LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.SHULKER))).build());
             } else if (key==EntityType.SNIFFER.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_RELIC))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.CREEPER))).build());
+            } else if (key==EntityType.SHULKER.getDefaultLootTable().get()) {
+                tableBuilder.pool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_OTHERSIDE))
+                        .when(LootItemEntityPropertyCondition.hasProperties(
+                                LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)).of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.CREEPER))).build());
             } else if (key==EntityType.WARDEN.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_5))
-                        .when(LootItemEntityPropertyCondition.hasProperties(
-                                LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.CREEPER))).build());
+                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_5)).build());
             } else if (key==EntityType.ELDER_GUARDIAN.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(2))

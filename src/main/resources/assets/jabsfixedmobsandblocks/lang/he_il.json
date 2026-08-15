@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "אתתה לא יכול לישון, אתה לא עייף",
-    "effect.jabsfixedmobsandblocks.insomnia": "נידנודי שינה",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "צריך נידנודי שינה כדי לשיון",
-    "advancements.adventure.sleep_with_insomnia_5.title": "נח היטב",
-    "advancements.adventure.sleep_with_insomnia_5.description": "לישון עם נדודי שינה 5",
     "filled_map.explorer" : "%s מפת חוקר ",
     "component.jabsfixedmobsandblocks.bait": "רמת פיתיון: s%",
     "block.jabsfixedmobsandblocks.azalea_button": "כפתור מאזליאה",

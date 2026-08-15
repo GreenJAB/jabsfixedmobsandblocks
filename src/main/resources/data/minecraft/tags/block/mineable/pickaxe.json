@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
-        "jabsfixedmobsandblocks:redstone_lantern"
+        "jabsfixedmobsandblocks:redstone_lantern",
+        "#fixedminecraft:glass"
     ]
 }

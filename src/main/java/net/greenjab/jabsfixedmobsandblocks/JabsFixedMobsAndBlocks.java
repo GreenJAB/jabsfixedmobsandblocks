@@ -40,7 +40,6 @@ public class JabsFixedMobsAndBlocks implements ModInitializer {
 		ItemGroupRegistry.register();
 		GameRuleRegistry.registerGameRules();
 		LootTableRegistry.registerLootTable();
-		MobEffectRegistry.registerMobEffects();
 		ParticleRegistry.registerParticles();
 		EntityTypeRegistry.registerEntityTypes();
 		MemoryRegistry.registerMemories();

@@ -6,10 +6,10 @@
     "#": "jabsfixedmobsandblocks:azalea_planks"
   },
   "pattern": [
-    "###"
+    "##"
   ],
   "result": {
-    "count": 6,
+    "count": 4,
     "id": "jabsfixedmobsandblocks:azalea_slab"
   }
 }

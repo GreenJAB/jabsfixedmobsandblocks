@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "Nemůžete spát, nejste unaven",
-    "effect.jabsfixedmobsandblocks.insomnia": "Nespavost",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "Vyžadovat nespavost pro spánek",
-    "advancements.adventure.sleep_with_insomnia_5.title": "Dobře vyspaný",
-    "advancements.adventure.sleep_with_insomnia_5.description": "Vyspi se s nespavostí 5",
     "filled_map.explorer" : "Mapa průzkumu %s",
     "component.jabsfixedmobsandblocks.bait": "Úroveň návnady: %s",
     "item.jabsfixedmobsandblocks.azalea_boat": "Člun z azalky",

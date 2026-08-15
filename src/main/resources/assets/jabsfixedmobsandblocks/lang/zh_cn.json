@@ -1,9 +1,4 @@
 {
-    "block.minecraft.bed.awake": "你现在无法休息，你并不疲倦",
-    "effect.jabsfixedmobsandblocks.insomnia": "失眠",
-    "gamerule.jabsfixedmobsandblocks.insomnia_sleep_requirement": "必须有失眠效果才能入睡",
-    "advancements.adventure.sleep_with_insomnia_5.title": "安眠无忧",
-    "advancements.adventure.sleep_with_insomnia_5.description": "在失眠 V 状态下入睡",
     "filled_map.explorer": "%s 探险家地图",
     "component.jabsfixedmobsandblocks.bait": "鱼饵等级：%s",
     "item.jabsfixedmobsandblocks.azalea_boat": "杜鹃木船",
