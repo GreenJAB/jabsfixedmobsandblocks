@@ -31,7 +31,7 @@ public class LootTableAdditions {
     public static void registerLootTableAdds() {
         System.out.println("register LootTableAdds");
 
-        LootTableEvents.MODIFY.register((key, tableBuilder, source, holder) -> {
+        LootTableEvents.MODIFY.register((key, tableBuilder, _, holder) -> {
             if (key==BuiltInLootTables.CHARGED_CREEPER) {
                 LootItemCondition.Builder predicate = LootItemEntityPropertyCondition.hasProperties(
                         LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PLAYER)));
@@ -42,19 +42,29 @@ public class LootTableAdditions {
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_PIGSTEP))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PIGLIN))).build());
+                tableBuilder.pool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_OTHERSIDE))
+                        .when(LootItemEntityPropertyCondition.hasProperties(
+                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().located(LocationPredicate.Builder.inDimension(Level.END)))).build());
             } else if (key==EntityType.SNIFFER.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_RELIC))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.CREEPER))).build());
-            } else if (key==EntityType.SHULKER.getDefaultLootTable().get()) {
-                tableBuilder.pool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_OTHERSIDE))
-                        .when(LootItemEntityPropertyCondition.hasProperties(
-                                LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)).of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.CREEPER))).build());
+            } else if (key==BuiltInLootTables.SNIFFER_DIGGING) {
+                tableBuilder.modifyPools(builder ->
+                        builder.add(LootItem.lootTableItem(Items.GOLDEN_DANDELION))
+                                .add(NestedLootTable.lootTableReference(LootTableRegistry.SNIFFER_EXTRA)));
             } else if (key==EntityType.WARDEN.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_5)).build());
+            } else if (key==BuiltInLootTables.SPAWNER_TRIAL_CHAMBER_CONSUMABLES) {
+                tableBuilder.pool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_CREATOR))
+                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_CREATOR_MUSIC_BOX))
+                        .add(LootItem.lootTableItem(Items.MUSIC_DISC_PRECIPICE))
+                        .add(LootItem.lootTableItem(Items.AIR).setWeight(3))
+                        .build());
             } else if (key==EntityType.ELDER_GUARDIAN.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(2))

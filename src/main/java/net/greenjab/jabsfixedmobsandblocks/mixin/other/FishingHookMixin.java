@@ -2,7 +2,6 @@ package net.greenjab.jabsfixedmobsandblocks.mixin.other;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.fabricmc.loader.api.FabricLoader;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.ComponentRegistry;
 import net.minecraft.core.registries.Registries;
@@ -67,13 +66,9 @@ public abstract class FishingHookMixin {
         int baitpower = 0;
         if (bait!=ItemStack.EMPTY) baitpower = bait.getComponents().get(ComponentRegistry.BAIT_POWER).level();
 
-        if (playerEntity.hasEffect(MobEffects.LUCK))
-            baitpower += 2*(playerEntity.getEffect(MobEffects.LUCK).getAmplifier()+1);
-
-        if (FabricLoader.getInstance().isModLoaded("jabsfixedworldandui")) {
-            MoonPhase moonPhase = (level).environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, playerEntity.blockPosition());
-            if (level.isDarkOutside() && moonPhase.index() == 0 && level.getBrightness(LightLayer.SKY, FBE.blockPosition())>10) baitpower++;
-        }
+        if (playerEntity.hasEffect(MobEffects.LUCK)) baitpower += 2*(playerEntity.getEffect(MobEffects.LUCK).getAmplifier()+1);
+        MoonPhase moonPhase = (level).environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, playerEntity.blockPosition());
+        if (level.isDarkOutside() && moonPhase.index() == 0 && level.getBrightness(LightLayer.SKY, FBE.blockPosition())>10) baitpower++;
 
         //https://www.desmos.com/calculator/xgxywuavpe
 

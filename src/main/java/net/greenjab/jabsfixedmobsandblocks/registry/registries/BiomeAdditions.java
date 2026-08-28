@@ -11,7 +11,6 @@ public class BiomeAdditions {
     public static void registerBiomeAdds() {
         System.out.println("register BiomeAdds");
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.DESERT), MobCategory.MONSTER, EntityType.ENDERMAN, 100, 1, 4);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.SAVANNA), MobCategory.CREATURE, EntityType.LLAMA, 10, 4, 4);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.DARK_FOREST), MobCategory.CREATURE, EntityType.ALLAY, 1, 1, 1);
     }

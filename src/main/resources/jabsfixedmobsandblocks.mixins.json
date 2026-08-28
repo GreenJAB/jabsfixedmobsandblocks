@@ -64,6 +64,7 @@
     "redstone.TransportItemsBetweenContainersMixin",
     "villager.EquipmentDispenseItemBehaviorMixin",
     "villager.GolemSensorMixin",
+    "villager.GossipTypeMixin",
     "villager.HarvestFarmlandMixin",
     "villager.MerchantMenuMixin",
     "villager.MerchantOfferMixin",

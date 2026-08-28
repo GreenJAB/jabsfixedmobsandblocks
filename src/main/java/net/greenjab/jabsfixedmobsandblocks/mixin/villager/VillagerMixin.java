@@ -17,15 +17,13 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.villager.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -107,11 +105,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 
     @Inject(method = "onReputationEventFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/gossip/GossipContainer;add(Ljava/util/UUID;Lnet/minecraft/world/entity/ai/gossip/GossipType;I)V", ordinal = 2))
     private void rideCamel(ReputationEventType type, Entity source, CallbackInfo ci){
-        if (this.isPassenger()) {
-            Entity vehicle = this.getVehicle();
-            assert vehicle != null;
-            if (vehicle.getType() == EntityType.CAMEL) this.stopRiding();
-        } else {
+        if (!this.isPassenger()) {
             if (source.isPassenger()) {
                 Entity vehicle = source.getVehicle();
                 assert vehicle != null;
@@ -119,6 +113,17 @@ public abstract class VillagerMixin extends AbstractVillager {
                     List<Entity> passengers = vehicle.getPassengers();
                     if (passengers.size() == 1) this.startRiding(vehicle);
                 }
+            }
+        }
+    }
+
+    @Inject(method = "mobInteract", at =
+    @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;", ordinal = 0), cancellable = true)
+    private void dismountCamel(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        if (this.getVehicle()!=null && this.getVehicle() instanceof VehicleEntity) {
+            if (player.isCrouching() && player.getItemInHand(hand).isEmpty()) {
+                this.stopRiding();
+                cir.setReturnValue(InteractionResult.SUCCESS);
             }
         }
     }
@@ -202,6 +207,11 @@ public abstract class VillagerMixin extends AbstractVillager {
                     if (this.level().getBrightness(LightLayer.SKY, this.blockPosition())!=0)
                         this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_SUN, 0);
             }
+        }
+
+        if (this.isAlive() && this.tickCount % 100 == 0 && this.getHealth()+1 < this.getMaxHealth() && this.foodLevel>0) {
+            this.heal(1.0F);
+            if (this.random.nextInt(4)==0) this.foodLevel--;
         }
     }
 
