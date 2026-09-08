@@ -20,7 +20,6 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 
 import static net.greenjab.jabsfixedmobsandblocks.registry.ModTags.FISHING_TREASURE_EBOOKS;
@@ -33,10 +32,8 @@ public class LootTableAdditions {
 
         LootTableEvents.MODIFY.register((key, tableBuilder, _, holder) -> {
             if (key==BuiltInLootTables.CHARGED_CREEPER) {
-                LootItemCondition.Builder predicate = LootItemEntityPropertyCondition.hasProperties(
-                        LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PLAYER)));
-                LootPool.Builder poolBuilder = LootPool.lootPool().add(NestedLootTable.lootTableReference(LootTableRegistry.SUPER_CHARGED_CREEPER_PLAYER_LOOT_TABLE).when(predicate));
-                tableBuilder.pool(poolBuilder.build());
+                tableBuilder.pool(LootPool.lootPool().add(NestedLootTable.lootTableReference(LootTableRegistry.CHARGED_CREEPER_PLAYER_LOOT_TABLE).when(LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PLAYER))))).build());
             } else if (key==EntityType.CREEPER.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_PIGSTEP))

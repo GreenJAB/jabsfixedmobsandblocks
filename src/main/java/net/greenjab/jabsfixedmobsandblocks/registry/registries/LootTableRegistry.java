@@ -10,7 +10,7 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 
 public class LootTableRegistry {
-    public static final ResourceKey<LootTable> SUPER_CHARGED_CREEPER_PLAYER_LOOT_TABLE = registerLoot_Table("gameplay/other/super_charged_creeper_player");
+    public static final ResourceKey<LootTable> CHARGED_CREEPER_PLAYER_LOOT_TABLE = registerLoot_Table("gameplay/charged_creeper/player");
     public static final ResourceKey<LootTable> FIXED_FISHING_TREASURE_LOOT_TABLE = registerLoot_Table("gameplay/other/fixed_fishing/treasure");
     public static final ResourceKey<LootTable> SNIFFER_EXTRA = registerLoot_Table("gameplay/other/sniffer_extra");
 
