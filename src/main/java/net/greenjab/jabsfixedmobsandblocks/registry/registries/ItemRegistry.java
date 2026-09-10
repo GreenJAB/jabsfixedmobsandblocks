@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.entity.vehicle.boat.ChestBoat;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
 public class ItemRegistry {
 
     public static final Item ALLAY_BUCKET = register("allay_bucket", settings ->
-                    new MobBucketItem(EntityType.ALLAY, Fluids.EMPTY, SoundEvents.BUCKET_EMPTY_AXOLOTL, settings),
+                    new MobBucketItem(EntityTypes.ALLAY, Fluids.EMPTY, SoundEvents.BUCKET_EMPTY_AXOLOTL, settings),
             new Item.Properties().stacksTo(1).component(DataComponents.BUCKET_ENTITY_DATA, CustomData.EMPTY));
     public static final Item PATINA = register("patina", PatinaItem::new, new Item.Properties());
     public static final Item REDSTONE_LANTERN = register(BlockRegistry.REDSTONE_LANTERN);

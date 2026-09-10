@@ -10,7 +10,6 @@ import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.greenjab.jabsfixedmobsandblocks.network.VillagerNeedsPayload;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.MemoryRegistry;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -109,7 +108,7 @@ public abstract class VillagerMixin extends AbstractVillager {
             if (source.isPassenger()) {
                 Entity vehicle = source.getVehicle();
                 assert vehicle != null;
-                if (vehicle.getType() == EntityType.CAMEL) {
+                if (vehicle.getType() == EntityTypes.CAMEL) {
                     List<Entity> passengers = vehicle.getPassengers();
                     if (passengers.size() == 1) this.startRiding(vehicle);
                 }
@@ -135,8 +134,8 @@ public abstract class VillagerMixin extends AbstractVillager {
         return true;
     }
 
-    @Inject(method = "<init>(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Holder;)V", at = @At("TAIL"))
-    private void startWithFood(EntityType<? extends Villager> entityType, Level level, Holder<VillagerType> type, CallbackInfo ci){
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void startWithFood(EntityType<? extends Villager> entityType, Level level, CallbackInfo ci){
         foodLevel = 10;
     }
 

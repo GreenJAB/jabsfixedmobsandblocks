@@ -1,19 +1,13 @@
 package net.greenjab.jabsfixedmobsandblocks;
 
 import net.fabricmc.api.ModInitializer;
-
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.greenjab.jabsfixedmobsandblocks.network.VillagerNeedsPayload;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +41,7 @@ public class JabsFixedMobsAndBlocks implements ModInitializer {
 		BiomeAdditions.registerBiomeAdds();
 		LootTableAdditions.registerLootTableAdds();
 
-		BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.DESERT), MobCategory.MONSTER, EntityType.ENDERMAN, 100, 1, 4);
-		BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.SAVANNA), MobCategory.CREATURE, EntityType.LLAMA, 10, 4, 4);
-	}
+		}
 
 	public static ArrayList<ItemStack> getArmor(LivingEntity entity) {
 		ArrayList<ItemStack> armor = new ArrayList<>();
