@@ -17,7 +17,6 @@
     "mobs.LlamaMixin",
     "mobs.MobMixin",
     "mobs.MonsterMixin",
-    "mobs.MonsterRoomFeatureMixin",
     "mobs.NonTameRandomTargetGoalMixin",
     "mobs.ParrotMixin",
     "mobs.PiglinMixin",
