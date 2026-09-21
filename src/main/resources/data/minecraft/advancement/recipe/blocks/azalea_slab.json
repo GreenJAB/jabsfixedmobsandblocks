@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jabsfixedmobsandblocks:azalea_slab"
+        "recipes": "jabsfixedmobsandblocks:azalea_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

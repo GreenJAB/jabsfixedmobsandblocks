@@ -3,6 +3,7 @@ package net.greenjab.jabsfixedmobsandblocks.registry.registries;
 import net.greenjab.jabsfixedmobsandblocks.registry.item.PatinaItem;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.greenjab.jabsfixedmobsandblocks.registry.other.BaitComponent;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -51,7 +52,7 @@ public class ItemRegistry {
     public static final Item AZALEA_SHELF = register(BlockRegistry.AZALEA_SHELF);
 
     public static final Item AZALEA_SIGN = register(
-            BlockRegistry.AZALEA_SIGN, (block, settings) -> new SignItem(block, BlockRegistry.AZALEA_WALL_SIGN, settings), new Item.Properties().stacksTo(16)
+            BlockRegistry.AZALEA_SIGN, (block, settings) -> new StandingAndWallBlockItem(block, BlockRegistry.AZALEA_WALL_SIGN, Direction.DOWN, settings), new Item.Properties().stacksTo(16)
     );
     public static final Item AZALEA_HANGING_SIGN = register(
             BlockRegistry.AZALEA_HANGING_SIGN,

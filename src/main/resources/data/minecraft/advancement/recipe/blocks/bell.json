@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:bell"
+                "recipes": "jabsfixedmobsandblocks:bell"
             },
             "trigger": "minecraft:recipe_unlocked"
         }

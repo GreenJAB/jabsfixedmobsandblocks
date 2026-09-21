@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jabsfixedmobsandblocks:brown_dye"
+        "recipes": "jabsfixedmobsandblocks:brown_dye"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

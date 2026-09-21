@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:black_dye_coal"
+                "recipes": "jabsfixedmobsandblocks:black_dye_coal"
             },
             "trigger": "minecraft:recipe_unlocked"
         }

@@ -2,11 +2,14 @@
     "type": "minecraft:entity",
     "pools": [
         {
-            "bonus_rolls": 0,
+            "bonus_rolls": {
+                "type": "minecraft:constant",
+                "value": 0
+            },
             "entries": [
                 {
                     "type": "minecraft:tag",
-                    "name": "jabsfixedmobsandblocks:sniffer_extra",
+                    "items": "#jabsfixedmobsandblocks:sniffer_extra",
                     "expand": true
                 }
             ],

@@ -67,8 +67,8 @@ public abstract class JungleTemplePieceMixin extends ScatteredFeaturePiece {
         this.placeBlock(level, Blocks.REPEATER.defaultBlockState().setValue(RepeaterBlock.FACING, Direction.NORTH), 8, -3, 10, chunkBB);
         this.placeBlock(level, Blocks.REPEATER.defaultBlockState().setValue(RepeaterBlock.FACING, Direction.NORTH), 9, -3, 9, chunkBB);
         this.placeBlock(level, Blocks.REPEATER.defaultBlockState().setValue(RepeaterBlock.FACING, Direction.NORTH).setValue(RepeaterBlock.POWERED, true), 10, -3, 10, chunkBB);
-        this.placeBlock(level, Blocks.REDSTONE_WIRE.defaultBlockState().setValue(RedStoneWireBlock.NORTH, RedstoneSide.SIDE).setValue(RedStoneWireBlock.SOUTH, RedstoneSide.SIDE), 9, -3, 10, chunkBB);
-        this.placeBlock(level, Blocks.REDSTONE_WIRE.defaultBlockState().setValue(RedStoneWireBlock.EAST, RedstoneSide.SIDE).setValue(RedStoneWireBlock.WEST, RedstoneSide.SIDE).setValue(RedStoneWireBlock.NORTH, RedstoneSide.SIDE).setValue(RedStoneWireBlock.SOUTH, RedstoneSide.SIDE), 8, -2, 9, chunkBB);
+        this.placeBlock(level, Blocks.REDSTONE_WIRE.defaultBlockState().setValue(RedstoneWireBlock.NORTH, RedstoneSide.SIDE).setValue(RedstoneWireBlock.SOUTH, RedstoneSide.SIDE), 9, -3, 10, chunkBB);
+        this.placeBlock(level, Blocks.REDSTONE_WIRE.defaultBlockState().setValue(RedstoneWireBlock.EAST, RedstoneSide.SIDE).setValue(RedstoneWireBlock.WEST, RedstoneSide.SIDE).setValue(RedstoneWireBlock.NORTH, RedstoneSide.SIDE).setValue(RedstoneWireBlock.SOUTH, RedstoneSide.SIDE), 8, -2, 9, chunkBB);
         this.placeBlock(level, Blocks.REDSTONE_TORCH.defaultBlockState().setValue(RedstoneTorchBlock.LIT, false), 10, -2, 9, chunkBB);
 
         this.placeBlock(level, Blocks.AIR.defaultBlockState(), 9, -1, 7, chunkBB);

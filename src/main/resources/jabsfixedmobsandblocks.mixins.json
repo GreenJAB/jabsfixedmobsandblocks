@@ -29,7 +29,6 @@
     "night.DifficultyInstanceMixin",
     "night.EnchantedCountIncreaseFunctionMixin",
     "other.AreaEffectCloudMixin",
-    "other.AxeItemMixin",
     "other.BaseFireBlockMixin",
     "other.BlockEntityTypesMixin",
     "other.BlocksMixin",
@@ -69,6 +68,7 @@
     "villager.MerchantMenuMixin",
     "villager.MerchantOfferMixin",
     "villager.SleepInBedMixin",
+    "villager.TradeWithVillagerMixin",
     "villager.VillagerMixin",
     "villager.WanderingTraderMixin",
     "villager.WanderingTraderSpawnerMixin"

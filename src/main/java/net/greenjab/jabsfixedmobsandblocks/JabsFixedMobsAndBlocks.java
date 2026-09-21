@@ -34,6 +34,7 @@ public class JabsFixedMobsAndBlocks implements ModInitializer {
 		ItemGroupRegistry.register();
 		GameRuleRegistry.registerGameRules();
 		LootTableRegistry.registerLootTable();
+		MixsonRegistry.registerMixsons();
 		ParticleRegistry.registerParticles();
 		EntityTypeRegistry.registerEntityTypes();
 		MemoryRegistry.registerMemories();
@@ -41,7 +42,7 @@ public class JabsFixedMobsAndBlocks implements ModInitializer {
 		BiomeAdditions.registerBiomeAdds();
 		LootTableAdditions.registerLootTableAdds();
 
-		}
+	}
 
 	public static ArrayList<ItemStack> getArmor(LivingEntity entity) {
 		ArrayList<ItemStack> armor = new ArrayList<>();

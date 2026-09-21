@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jabsfixedmobsandblocks:azalea_fence_gate"
+        "recipes": "jabsfixedmobsandblocks:azalea_fence_gate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

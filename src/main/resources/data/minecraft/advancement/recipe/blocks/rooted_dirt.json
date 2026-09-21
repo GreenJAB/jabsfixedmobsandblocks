@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jabsfixedmobsandblocks:rooted_dirt"
+        "recipes": "jabsfixedmobsandblocks:rooted_dirt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -16,7 +16,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
-import net.minecraft.world.item.component.MapItemColor;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
@@ -27,8 +26,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jspecify.annotations.NonNull;
 import org.spongepowered.asm.mixin.Unique;
-
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -38,7 +35,7 @@ public class WanderingTraderSpecialLootFunction extends LootItemConditionalFunct
                     .apply(i, WanderingTraderSpecialLootFunction::new)
     );
 
-    private WanderingTraderSpecialLootFunction(final List<LootItemCondition> predicates) {
+    private WanderingTraderSpecialLootFunction(final Optional<Holder<LootItemCondition>> predicates) {
         super(predicates);
     }
 
@@ -49,7 +46,6 @@ public class WanderingTraderSpecialLootFunction extends LootItemConditionalFunct
 
     @Override
     public @NonNull ItemStack run(final @NonNull ItemStack itemStack, final @NonNull LootContext context) {
-        //int i = (int)(Math.random()*(FabricLoader.getInstance().isModLoaded("jabsfixedtransport")?5:4));
         int i = (int)(Math.random()*5);
         return switch (i) {
             case 0 -> createMusicDiscStack();
@@ -66,7 +62,8 @@ public class WanderingTraderSpecialLootFunction extends LootItemConditionalFunct
         Item[] discs = {Items.MUSIC_DISC_13, Items.MUSIC_DISC_CAT, Items.MUSIC_DISC_BLOCKS, Items.MUSIC_DISC_CHIRP, Items.MUSIC_DISC_FAR,
                 Items.MUSIC_DISC_MALL, Items.MUSIC_DISC_MELLOHI, Items.MUSIC_DISC_STAL, Items.MUSIC_DISC_STRAD, Items.MUSIC_DISC_WARD,
                 Items.MUSIC_DISC_11, Items.MUSIC_DISC_WAIT, Items.MUSIC_DISC_PIGSTEP, Items.MUSIC_DISC_OTHERSIDE, Items.MUSIC_DISC_5,
-                Items.MUSIC_DISC_RELIC, Items.MUSIC_DISC_CREATOR, Items.MUSIC_DISC_CREATOR_MUSIC_BOX, Items.MUSIC_DISC_PRECIPICE};
+                Items.MUSIC_DISC_RELIC, Items.MUSIC_DISC_CREATOR, Items.MUSIC_DISC_CREATOR_MUSIC_BOX, Items.MUSIC_DISC_PRECIPICE,
+                Items.MUSIC_DISC_TEARS, Items.MUSIC_DISC_LAVA_CHICKEN, Items.MUSIC_DISC_BOUNCE};
         return discs[(int)(Math.random()*discs.length)].getDefaultInstance();
     }
 
@@ -97,28 +94,11 @@ public class WanderingTraderSpecialLootFunction extends LootItemConditionalFunct
         Item[] heads = {Items.ZOMBIE_HEAD, Items.SKELETON_SKULL, Items.CREEPER_HEAD, Items.WITHER_SKELETON_SKULL, Items.PIGLIN_HEAD, Items.PLAYER_HEAD};
         ItemStack head = heads[(int)(Math.random()*heads.length)].getDefaultInstance();
         if (head.is(Items.PLAYER_HEAD)) {
-
             MinecraftServer minecraftServer = context.getLevel().getServer();
             ProfileResolver lv = minecraftServer.services().profileResolver();
             Optional<GameProfile> optional;
-            int who = minecraftServer.overworld().getRandom().nextInt(3);
-            who = 0;
-            switch (who) {
-                case 0:
-                    //mod maker
-                    optional = lv.fetchByName("green_jab");
-                    head.set(DataComponents.PROFILE, ResolvableProfile.createResolved(optional.get()));
-                    break;
-                case 1:
-                    //patreon
-                    String[] names = {"Rellati"};
-                    optional = lv.fetchByName(names[(int)(Math.random()*names.length)]);
-                    head.set(DataComponents.PROFILE, ResolvableProfile.createResolved(optional.get()));
-                    break;
-                default:
-                    //blank head
-            }
-
+            optional = lv.fetchByName("green_jab");
+            head.set(DataComponents.PROFILE, ResolvableProfile.createResolved(optional.get()));
         }
         return head;
     }
@@ -126,7 +106,7 @@ public class WanderingTraderSpecialLootFunction extends LootItemConditionalFunct
     @Unique
     private ItemStack createBiomeMapStack(LootContext context) {
         ServerLevel level = context.getLevel();
-        int map = level.getRandom().nextInt(6);
+        int map = level.getRandom().nextInt(7);
         final ResourceKey<Biome> biomeSearch = switch (map) {
             case 0 -> Biomes.MUSHROOM_FIELDS;
             case 1 -> Biomes.CHERRY_GROVE;
@@ -134,26 +114,25 @@ public class WanderingTraderSpecialLootFunction extends LootItemConditionalFunct
             case 3 -> Biomes.BADLANDS;
             case 4 -> Biomes.WARM_OCEAN;
             case 5 -> Biomes.PALE_GARDEN;
+            case 6 -> Biomes.DAPPLED_FOREST;
             default -> Biomes.FOREST;
         };
 
         Predicate<Holder<Biome>> predicate =entry -> entry.is(biomeSearch);
 
-        Pair<BlockPos, Holder<Biome>> pair = level.findClosestBiome3d(predicate, BlockPos.containing(context.getOptionalParameter(LootContextParams.ORIGIN)), 6400, 32, 64);
+        Pair<BlockPos, Holder<Biome>> pair = level.findClosestBiome3d(predicate, BlockPos.containing(context.getOptional(LootContextParams.ORIGIN)), 6400, 32, 64);
         if (pair != null) {
             BlockPos blockPos = pair.getFirst();
             ItemStack itemStack = MapItem.create(level, blockPos.getX(), blockPos.getZ(), (byte) 2, true, true);
             MapItem.renderBiomePreviewMap(level, itemStack);
 
-            String[] names = {"mushroom_fields", "cherry_grove", "ice_spikes", "badlands", "warm_ocean", "pale_garden"};
+            String[] names = {"mushroom_fields", "cherry_grove", "ice_spikes", "badlands", "warm_ocean", "pale_garden", "dappled_forest"};
             Component name = Component.translatable("filled_map.explorer", Component.translatable("biome.minecraft." + names[map]));
-            int[] colour = {7412448, 16751570, 4639231, 16725801, 1938431, 10856879};
 
             itemStack.set(DataComponents.ITEM_NAME, name);
             MapItemSavedData m = MapItem.getSavedData(itemStack, level);
             assert m != null;
             m.toggleBanner(level, new BlockPos(blockPos.getX(), -1000 - map, blockPos.getZ()));
-            itemStack.set(DataComponents.MAP_COLOR, new MapItemColor(colour[map]));
 
             return itemStack;
         }

@@ -18,14 +18,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.item.DispensibleContainerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -64,7 +61,7 @@ public interface DispenseItemBehaviorMixin {
 
                     if (corals.isEmpty()) BlockRegistry.addCoral();
                     BlockState blockState = level.getBlockState(target);
-                    if (!(blockState.is(BlockTags.CONVERTABLE_TO_MUD)|| corals.containsKey(blockState.getBlock()))) {
+                    if (!(blockState.is(BlockTags.CONVERTIBLE_TO_MUD)|| corals.containsKey(blockState.getBlock()))) {
                         return this.defaultDispenseItemBehavior.dispense(source, dispensed);
                     } else {
                         if (!level.isClientSide()) {
@@ -76,7 +73,7 @@ public interface DispenseItemBehaviorMixin {
 
                         level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                         level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-                        if (blockState.is(BlockTags.CONVERTABLE_TO_MUD))
+                        if (blockState.is(BlockTags.CONVERTIBLE_TO_MUD))
                             level.setBlockAndUpdate(target, Blocks.MUD.defaultBlockState());
                         else {
                             if (blockState.getProperties().contains(BlockStateProperties.WATERLOGGED)) {
@@ -126,25 +123,6 @@ public interface DispenseItemBehaviorMixin {
             from = @At(value = "FIELD", target = "Lnet/minecraft/world/item/Items;PUFFERFISH_BUCKET:Lnet/minecraft/world/item/Item;",opcode = Opcodes.GETSTATIC)))
     private static void allayBucket(ItemLike item, DispenseItemBehavior behavior, Operation<Void> original) {
         original.call(item, behavior);
-
-        DispenseItemBehavior filledBucketBehavior = new DefaultDispenseItemBehavior() /* DispenseItemBehavior$3 */ {
-            private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
-
-            @Override
-            public @NonNull ItemStack execute(final BlockSource source, final ItemStack dispensed) {
-                DispensibleContainerItem bucket = (DispensibleContainerItem)dispensed.getItem();
-                BlockPos target = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
-                Level level = source.level();
-                BlockState blockState = level.getBlockState(target);
-                if (blockState.getCollisionShape(level, target).isEmpty()) {
-                    if (level instanceof ServerLevel serverLevel && bucket instanceof MobBucketItem bucketItem) {
-                        bucketItem.spawn(serverLevel, dispensed, target);
-                        return this.consumeWithRemainder(source, dispensed, new ItemStack(Items.BUCKET));
-                    }
-                }
-                return this.defaultDispenseItemBehavior.dispense(source, dispensed);
-            }
-        };
-        original.call(ItemRegistry.ALLAY_BUCKET, filledBucketBehavior);
+        original.call(ItemRegistry.ALLAY_BUCKET, behavior);
     }
 }

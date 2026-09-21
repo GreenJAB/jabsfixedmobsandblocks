@@ -1,6 +1,5 @@
 package net.greenjab.jabsfixedmobsandblocks.registry.registries;
 
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.greenjab.jabsfixedmobsandblocks.JabsFixedMobsAndBlocks;
 import net.greenjab.jabsfixedmobsandblocks.registry.block.*;
 import net.minecraft.core.Registry;
@@ -75,7 +74,7 @@ public class BlockRegistry {
                     .noCollision()
                     .strength(0.5F)
                     .ignitedByLava()
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
     public static final Block AZALEA_TRAPDOOR = register(
             "azalea_trapdoor",
@@ -121,7 +120,7 @@ public class BlockRegistry {
                     .strength(3.0F)
                     .noOcclusion()
                     .ignitedByLava()
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
 
     public static final Block AZALEA_SHELF = register(
@@ -145,7 +144,7 @@ public class BlockRegistry {
                     .instabreak()
                     .lightLevel(_ -> 10)
                     .sound(SoundType.WOOL)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
 
     public static final Block REDSTONE_LANTERN = register(
@@ -158,7 +157,7 @@ public class BlockRegistry {
                     .sound(SoundType.LANTERN)
                     .lightLevel(litBlockEmission(10))
                     .noOcclusion()
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
 
     public static void registerBlocks() {
@@ -175,10 +174,7 @@ public class BlockRegistry {
         fireBlock.setFlammable(AZALEA_LOG, 5, 5);
         fireBlock.setFlammable(AZALEA_WOOD, 5, 5);
         fireBlock.setFlammable(STRIPPED_AZALEA_LOG, 5, 5);
-        fireBlock.setFlammable(STRIPPED_AZALEA_LOG, 5, 5);
-
-        StrippableBlockRegistry.register(AZALEA_LOG, STRIPPED_AZALEA_LOG);
-        StrippableBlockRegistry.register(AZALEA_WOOD, STRIPPED_AZALEA_WOOD);
+        fireBlock.setFlammable(STRIPPED_AZALEA_WOOD, 5, 5);
     }
 
     private static Block register(String id, BlockBehaviour.Properties settings) {

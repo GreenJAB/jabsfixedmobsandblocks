@@ -5,7 +5,7 @@
             "bonus_rolls": 0,
             "conditions": [
                 {
-                    "condition": "minecraft:random_chance_with_enchanted_bonus",
+                    "type": "minecraft:random_chance_with_enchanted_bonus",
                     "enchanted_chance": {
                         "type": "minecraft:linear",
                         "base": 0.5625,
@@ -27,30 +27,29 @@
             "bonus_rolls": 0,
             "conditions": [
                 {
-                    "condition": "minecraft:killed_by_player"
+                    "type": "minecraft:killed_by_player"
                 }
             ],
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "functions": [
+                    "modifier": [
                         {
-                            "add": false,
+                            "type": "minecraft:set_count",
                             "count": {
                                 "type": "minecraft:uniform",
                                 "max": 3,
                                 "min": 0
-                            },
-                            "function": "minecraft:set_count"
+                            }
                         },
                         {
+                            "type": "minecraft:enchanted_count_increase",
                             "count": {
                                 "type": "minecraft:uniform",
-                                "max": 1,
-                                "min": 0
+                                "max": 1.0,
+                                "min": 0.0
                             },
-                            "enchantment": "minecraft:looting",
-                            "function": "minecraft:enchanted_count_increase"
+                            "enchantment": "minecraft:looting"
                         }
                     ],
                     "name": "minecraft:rotten_flesh"

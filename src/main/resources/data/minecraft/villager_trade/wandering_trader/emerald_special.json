@@ -1,7 +1,7 @@
 {
-  "given_item_modifiers": [
+  "given_item_modifier": [
     {
-      "function": "jabsfixedmobsandblocks:wandering_trader_special"
+      "type": "jabsfixedmobsandblocks:wandering_trader_special"
     }
   ],
   "gives": {

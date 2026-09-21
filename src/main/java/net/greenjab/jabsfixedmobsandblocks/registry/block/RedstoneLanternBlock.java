@@ -1,7 +1,6 @@
 package net.greenjab.jabsfixedmobsandblocks.registry.block;
 
 import com.google.common.collect.Lists;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -26,14 +25,8 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public class RedstoneLanternBlock extends LanternBlock {
-    public static final MapCodec<RedstoneLanternBlock> CODEC = simpleCodec(RedstoneLanternBlock::new);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final Map<BlockGetter, List<BurnoutEntry>> BURNOUT_MAP = new WeakHashMap<>();
-
-    @Override
-    public @NonNull MapCodec<? extends RedstoneLanternBlock> codec() {
-        return CODEC;
-    }
 
     public RedstoneLanternBlock(Properties settings) {
         super(settings);

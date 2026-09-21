@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:azalea_planks"
+                "recipes": "jabsfixedmobsandblocks:azalea_planks"
             },
             "trigger": "minecraft:recipe_unlocked"
         }

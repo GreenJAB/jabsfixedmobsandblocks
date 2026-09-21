@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:mushroom_stem"
+                "recipes": "jabsfixedmobsandblocks:mushroom_stem"
             },
             "trigger": "minecraft:recipe_unlocked"
         }

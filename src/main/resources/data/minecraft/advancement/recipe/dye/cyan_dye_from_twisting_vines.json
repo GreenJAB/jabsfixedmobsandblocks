@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:cyan_dye_from_twisting_vines"
+                "recipes": "jabsfixedmobsandblocks:cyan_dye_from_twisting_vines"
             },
             "trigger": "minecraft:recipe_unlocked"
         }

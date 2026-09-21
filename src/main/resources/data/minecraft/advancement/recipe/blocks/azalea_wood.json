@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jabsfixedmobsandblocks:azalea_wood"
+        "recipes": "jabsfixedmobsandblocks:azalea_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

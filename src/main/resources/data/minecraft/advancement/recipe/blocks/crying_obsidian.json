@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:crying_obsidian"
+                "recipes": "jabsfixedmobsandblocks:crying_obsidian"
             },
             "trigger": "minecraft:recipe_unlocked"
         }

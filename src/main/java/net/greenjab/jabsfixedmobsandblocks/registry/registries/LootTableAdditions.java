@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
@@ -31,8 +32,9 @@ public class LootTableAdditions {
         System.out.println("register LootTableAdds");
 
         LootTableEvents.MODIFY.register((key, tableBuilder, _, holder) -> {
+            HolderLookup.RegistryLookup<LootTable> lootTables = holder.lookupOrThrow(Registries.LOOT_TABLE);
             if (key==BuiltInLootTables.CHARGED_CREEPER) {
-                tableBuilder.pool(LootPool.lootPool().add(NestedLootTable.lootTableReference(LootTableRegistry.CHARGED_CREEPER_PLAYER_LOOT_TABLE).when(LootItemEntityPropertyCondition.hasProperties(
+                tableBuilder.pool(LootPool.lootPool().add(NestedLootTable.lootTableReference(lootTables.getOrThrow(LootTableRegistry.CHARGED_CREEPER_PLAYER_LOOT_TABLE)).when(LootItemEntityPropertyCondition.hasProperties(
                         LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(holder.lookupOrThrow(Registries.ENTITY_TYPE), EntityTypes.PLAYER))))).build());
             } else if (key== EntityTypes.CREEPER.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
@@ -55,7 +57,7 @@ public class LootTableAdditions {
             } else if (key==BuiltInLootTables.SNIFFER_DIGGING) {
                 tableBuilder.modifyPools(builder ->
                         builder.add(LootItem.lootTableItem(Items.GOLDEN_DANDELION))
-                                .add(NestedLootTable.lootTableReference(LootTableRegistry.SNIFFER_EXTRA)));
+                                .add(NestedLootTable.lootTableReference(lootTables.getOrThrow(LootTableRegistry.SNIFFER_EXTRA))));
             } else if (key==EntityTypes.WARDEN.getDefaultLootTable().get()) {
                 tableBuilder.pool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.MUSIC_DISC_5)).build());

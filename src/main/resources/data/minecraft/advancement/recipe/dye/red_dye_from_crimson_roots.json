@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:red_dye_from_crimson_roots"
+                "recipes": "jabsfixedmobsandblocks:red_dye_from_crimson_roots"
             },
             "trigger": "minecraft:recipe_unlocked"
         }

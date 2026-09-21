@@ -1,9 +1,10 @@
 [versions]
 loom = "1.17-SNAPSHOT"
 yamlang = "1.4.1"
-minecraft = "26.2"
-fabric-loader = "0.19.3"
-fabric-api = "0.154.2+26.2"
+minecraft = "26.3"
+fabric-loader = "0.19.5"
+fabric-api = "0.160.7+26.3"
+mixson = "2.2.0"
 
 [plugins]
 fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
@@ -13,4 +14,5 @@ yamlang = { id = "me.fallenbreath.yamlang", version.ref = "yamlang" }
 minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
 fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
 fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
+mixson = { group = "maven.modrinth", name = "mixson", version.ref = "mixson" }
 

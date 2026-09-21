@@ -13,7 +13,7 @@
         },
         "has_the_recipe": {
             "conditions": {
-                "recipe": "jabsfixedmobsandblocks:golden_fermented_spider_eye"
+                "recipes": "jabsfixedmobsandblocks:golden_fermented_spider_eye"
             },
             "trigger": "minecraft:recipe_unlocked"
         }
