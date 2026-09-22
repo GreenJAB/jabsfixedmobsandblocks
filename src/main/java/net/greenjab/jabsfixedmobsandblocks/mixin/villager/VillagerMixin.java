@@ -338,7 +338,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 
     @Inject(method = "shouldRestock", at = @At(value = "HEAD"))
     private void levelUpOnRestock(ServerLevel level, CallbackInfoReturnable<Boolean> cir) {
-        if (!level.getGameRules().get(GameRuleRegistry.VILLAGERS_TRADE_AT_NIGHT) && this.shouldIncreaseLevel()) {
+        if (this.shouldIncreaseLevel()) {
             this.increaseMerchantCareer(level);
             this.increaseProfessionLevelOnUpdate = false;
         }

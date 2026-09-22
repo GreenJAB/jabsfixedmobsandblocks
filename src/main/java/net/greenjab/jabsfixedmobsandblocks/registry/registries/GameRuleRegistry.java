@@ -38,7 +38,7 @@ public class GameRuleRegistry {
         VILLAGERS_NEED_SUNLIGHT = registerBoolean("villagers_need_sunlight", true);
         VILLAGERS_NEED_FRIENDS = registerBoolean("villagers_need_friends", true);
         VILLAGERS_NEED_SPACE = registerBoolean("villagers_need_space", true);
-        VILLAGERS_TRADE_AT_NIGHT = registerBoolean("villagers_trade_at_night", true);
+        VILLAGERS_TRADE_AT_NIGHT = registerBoolean("villagers_trade_at_night", false);
         VILLAGERS_STRONGER_DEMAND = registerBoolean("villagers_stronger_demand", true);
         VILLAGERS_NITWITIFY_ON_ZOMBIFICATION = registerBoolean("villagers_nitwitify_on_zombification", true);
         ONE_IRON_GOLEM_PER_MOB = registerBoolean("one_iron_golem_per_mob", true);
