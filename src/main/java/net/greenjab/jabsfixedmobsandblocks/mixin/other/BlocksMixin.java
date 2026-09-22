@@ -3,6 +3,7 @@ package net.greenjab.jabsfixedmobsandblocks.mixin.other;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.greenjab.jabsfixedmobsandblocks.registry.block.*;
+import net.greenjab.jabsfixedmobsandblocks.registry.registries.BlockRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.references.BlockItemId;
@@ -30,6 +31,7 @@ public abstract class BlocksMixin {
     @At(value = "FIELD", target = "Lnet/minecraft/references/BlockItemIds;SNOW:Lnet/minecraft/references/BlockItemId;", opcode = Opcodes.GETSTATIC), to =
     @At(value = "FIELD",target = "Lnet/minecraft/world/level/block/Blocks;SNOW:Lnet/minecraft/world/level/block/Block;", opcode = Opcodes.PUTSTATIC)))
     private static Block snow(BlockItemId id, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties, Operation<Block> original) {
+        BlockRegistry.registerBlocks();
         return register(id, NewSnowBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).replaceable().forceSolidOff().randomTicks().strength(0.1F).requiresCorrectToolForDrops().sound(SoundType.SNOW).isViewBlocking((state, _, _) -> state.getValue(SnowLayerBlock.LAYERS) >= 8).pushReaction(PushReaction.DESTROY));}
 
     @WrapOperation(method="<clinit>", at = @At( value = "INVOKE", target = "Lnet/minecraft/world/level/block/Blocks;register(Lnet/minecraft/references/BlockItemId;Ljava/util/function/Function;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;", ordinal = 0), slice = @Slice( from =
