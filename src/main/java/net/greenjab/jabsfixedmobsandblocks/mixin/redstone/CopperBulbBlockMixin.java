@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.ticks.TickPriority;
 import org.jspecify.annotations.NonNull;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 import static net.minecraft.world.level.block.CopperBulbBlock.LIT;
@@ -25,12 +24,13 @@ public abstract class CopperBulbBlockMixin extends Block {
         super(settings);
     }
 
-    @Shadow
-    public abstract void checkAndFlip(BlockState state, ServerLevel level, BlockPos pos);
-
     @Override
-    public void tick(@NonNull BlockState state, @NonNull ServerLevel world, @NonNull BlockPos pos, @NonNull RandomSource random) {
-        checkAndFlip(state, world, pos);
+    public void tick(@NonNull BlockState state, @NonNull ServerLevel level, @NonNull BlockPos pos, @NonNull RandomSource random) {
+        boolean signal = level.hasNeighborSignal(pos);
+        BlockState newState = state;
+        newState = newState.cycle(LIT);
+        level.setBlockAndUpdate(pos, newState.setValue(POWERED, signal));
+        level.playSound(null, pos, newState.getValue(LIT) ? SoundEvents.COPPER_BULB_TURN_ON : SoundEvents.COPPER_BULB_TURN_OFF, SoundSource.BLOCKS);
     }
 
     @WrapOperation(method = {"onPlace", "neighborChanged"}, at =
