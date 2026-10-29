@@ -13,7 +13,6 @@ accessible method net/minecraft/world/level/block/FireBlock setFlammable (Lnet/m
 accessible field net/minecraft/world/level/storage/loot/BuiltInLootTables LOCATIONS Ljava/util/Set;
 accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 accessible field net/minecraft/core/cauldron/CauldronInteraction$Dispatcher items Ljava/util/Map;
-accessible method net/minecraft/world/level/block/Block dropFromBlockInteractLootTable (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/item/ItemInstance;Lnet/minecraft/world/entity/Entity;Ljava/util/function/BiConsumer;)Z
 accessible class net/minecraft/world/level/block/entity/SculkSensorBlockEntity$VibrationUser
 accessible method net/minecraft/world/level/block/entity/DispenserBlockEntity setItems (Lnet/minecraft/core/NonNullList;)V
 accessible field net/minecraft/world/entity/vehicle/minecart/AbstractMinecart behavior Lnet/minecraft/world/entity/vehicle/minecart/MinecartBehavior;
@@ -23,3 +22,4 @@ accessible method net/minecraft/world/entity/animal/allay/Allay dropEquipment (L
 accessible method net/minecraft/server/level/ServerPlayer setShoulderEntityRight (Lnet/minecraft/nbt/CompoundTag;)V
 accessible method net/minecraft/server/level/ServerPlayer setShoulderEntityLeft (Lnet/minecraft/nbt/CompoundTag;)V
 accessible field net/minecraft/world/entity/monster/zombie/Zombie drowningTracker Lnet/minecraft/world/entity/ConversionTracker;
+accessible field net/minecraft/world/entity/npc/villager/Villager foodLevel I
