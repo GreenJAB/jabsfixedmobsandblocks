@@ -116,17 +116,6 @@ public abstract class VillagerMixin extends AbstractVillager {
         }
     }
 
-    @Inject(method = "mobInteract", at =
-    @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;", ordinal = 0), cancellable = true)
-    private void dismountCamel(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        if (this.getVehicle()!=null && this.getVehicle() instanceof VehicleEntity) {
-            if (player.isShiftKeyDown() && player.getItemInHand(hand).isEmpty()) {
-                this.stopRiding();
-                cir.setReturnValue(InteractionResult.SUCCESS);
-            }
-        }
-    }
-
     @Unique private boolean tryEat() {
         eatUntilFull();
         if (foodLevel<=0) return false;
@@ -248,6 +237,27 @@ public abstract class VillagerMixin extends AbstractVillager {
     private void msgPlayer(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(Items.VILLAGER_SPAWN_EGG) || !this.isAlive() || this.isTrading() || this.isSleeping()) return;
+
+        if (player.isShiftKeyDown()) {
+            if (itemStack.isEmpty()) {
+                if (this.getVehicle() != null) {
+                    this.stopRiding();
+                    cir.setReturnValue(InteractionResult.SUCCESS);
+                    return;
+                }
+            }
+            Integer value = Villager.FOOD_POINTS.get(itemStack.getItem());
+            if (value != null) {
+                if (this.foodLevel < 100) {
+                    this.foodLevel += value;
+                    itemStack.consume(1, player);
+                    if (level() instanceof ServerLevel level) level.broadcastEntityEvent(this, (byte)14);
+                    cir.setReturnValue(InteractionResult.SUCCESS);
+                    return;
+                }
+            }
+        }
+
         if (player instanceof ServerPlayer serverPlayer && level() instanceof ServerLevel serverLevel) {
             eatUntilFull();
             if (foodLevel>0)this.getBrain().setMemory(MemoryRegistry.TIME_SINCE_EAT, 0);

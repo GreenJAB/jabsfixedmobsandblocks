@@ -13,6 +13,7 @@ public class LootTableRegistry {
     public static final ResourceKey<LootTable> CHARGED_CREEPER_PLAYER_LOOT_TABLE = registerLoot_Table("gameplay/charged_creeper/player");
     public static final ResourceKey<LootTable> FIXED_FISHING_TREASURE_LOOT_TABLE = registerLoot_Table("gameplay/other/fixed_fishing/treasure");
     public static final ResourceKey<LootTable> SNIFFER_EXTRA = registerLoot_Table("gameplay/other/sniffer_extra");
+    public static final ResourceKey<LootTable> GLOW_SQUID_FROGLIGHT = registerLoot_Table("gameplay/other/glow_squid_froglight");
 
     private static ResourceKey<LootTable> registerLoot_Table(String id) {
         return registerLootTable(ResourceKey.create(Registries.LOOT_TABLE, JabsFixedMobsAndBlocks.id(id)));
