@@ -20,6 +20,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -36,28 +37,28 @@ public class ItemRegistry {
             new MinecartItem(EntityTypeRegistry.DISPENCER_MINECART_ENTITY_TYPE, settings), new Item.Properties().stacksTo(1));
     public static final Item GOLDEN_FERMENTED_SPIDER_EYE = register("golden_fermented_spider_eye", new Item.Properties().component(ComponentRegistry.BAIT_POWER, new BaitComponent(3)));
 
-    public static final Item AZALEA_PLANKS = register(BlockRegistry.AZALEA_PLANKS);
-    public static final Item AZALEA_LOG = register(BlockRegistry.AZALEA_LOG);
-    public static final Item STRIPPED_AZALEA_LOG = register(BlockRegistry.STRIPPED_AZALEA_LOG);
-    public static final Item STRIPPED_AZALEA_WOOD = register(BlockRegistry.STRIPPED_AZALEA_WOOD);
-    public static final Item AZALEA_WOOD = register(BlockRegistry.AZALEA_WOOD);
-    public static final Item AZALEA_SLAB = register(BlockRegistry.AZALEA_SLAB);
-    public static final Item AZALEA_FENCE = register(BlockRegistry.AZALEA_FENCE);
-    public static final Item AZALEA_STAIRS = register(BlockRegistry.AZALEA_STAIRS);
-    public static final Item AZALEA_BUTTON = register(BlockRegistry.AZALEA_BUTTON);
-    public static final Item AZALEA_PRESSURE_PLATE = register(BlockRegistry.AZALEA_PRESSURE_PLATE);
-    public static final Item AZALEA_DOOR = register(BlockRegistry.AZALEA_DOOR, DoubleHighBlockItem::new);
-    public static final Item AZALEA_TRAPDOOR = register(BlockRegistry.AZALEA_TRAPDOOR);
-    public static final Item AZALEA_FENCE_GATE = register(BlockRegistry.AZALEA_FENCE_GATE);
-    public static final Item AZALEA_SHELF = register(BlockRegistry.AZALEA_SHELF);
+    public static final Item AZALEA_PLANKS = register(BlockRegistry.AZALEA_PLANKS, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_LOG = register(BlockRegistry.AZALEA_LOG, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item STRIPPED_AZALEA_LOG = register(BlockRegistry.STRIPPED_AZALEA_LOG, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item STRIPPED_AZALEA_WOOD = register(BlockRegistry.STRIPPED_AZALEA_WOOD, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_WOOD = register(BlockRegistry.AZALEA_WOOD, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_SLAB = register(BlockRegistry.AZALEA_SLAB, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_SLABS));
+    public static final Item AZALEA_FENCE = register(BlockRegistry.AZALEA_FENCE, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_STAIRS = register(BlockRegistry.AZALEA_STAIRS, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_BUTTON = register(BlockRegistry.AZALEA_BUTTON, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_EXTRA_SMALL));
+    public static final Item AZALEA_PRESSURE_PLATE = register(BlockRegistry.AZALEA_PRESSURE_PLATE, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_DOOR = register(BlockRegistry.AZALEA_DOOR, DoubleHighBlockItem::new, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_LARGE));
+    public static final Item AZALEA_TRAPDOOR = register(BlockRegistry.AZALEA_TRAPDOOR, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_FENCE_GATE = register(BlockRegistry.AZALEA_FENCE_GATE, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
+    public static final Item AZALEA_SHELF = register(BlockRegistry.AZALEA_SHELF, new Item.Properties().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_BLOCKS));
 
     public static final Item AZALEA_SIGN = register(
-            BlockRegistry.AZALEA_SIGN, (block, settings) -> new StandingAndWallBlockItem(block, BlockRegistry.AZALEA_WALL_SIGN, Direction.DOWN, settings), new Item.Properties().stacksTo(16)
+            BlockRegistry.AZALEA_SIGN, (block, settings) -> new StandingAndWallBlockItem(block, BlockRegistry.AZALEA_WALL_SIGN, Direction.DOWN, settings), new Item.Properties().stacksTo(16).cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_LARGE)
     );
     public static final Item AZALEA_HANGING_SIGN = register(
             BlockRegistry.AZALEA_HANGING_SIGN,
             (block, settings) -> new HangingSignItem(block, BlockRegistry.AZALEA_WALL_HANGING_SIGN, settings),
-            new Item.Properties().stacksTo(16)
+            new Item.Properties().stacksTo(16).cookingFuel(ContextIntProviders.COOKING_TIME_HANGING_SIGNS)
     );
 
     public static final EntityType<Boat> AZALEA_BOAT_ENTITY = register2(
@@ -78,10 +79,10 @@ public class ItemRegistry {
     );
 
     public static final Item AZALEA_BOAT = register(
-            "azalea_boat", settings -> new BoatItem(AZALEA_BOAT_ENTITY, settings), new Item.Properties().stacksTo(1)
+            "azalea_boat", settings -> new BoatItem(AZALEA_BOAT_ENTITY, settings), new Item.Properties().stacksTo(1).cookingFuel(ContextIntProviders.COOKING_TIME_BOATS)
     );
     public static final Item AZALEA_CHEST_BOAT = register(
-            "azalea_chest_boat", settings -> new BoatItem(AZALEA_CHEST_BOAT_ENTITY, settings), new Item.Properties().stacksTo(1)
+            "azalea_chest_boat", settings -> new BoatItem(AZALEA_CHEST_BOAT_ENTITY, settings), new Item.Properties().stacksTo(1).cookingFuel(ContextIntProviders.COOKING_TIME_BOATS)
     );
 
     private static EntityType.EntityFactory<Boat> getBoatFactory(Supplier<Item> itemSupplier) {
@@ -121,7 +122,9 @@ public class ItemRegistry {
     public static Item register(Block block) {
         return register(block, BlockItem::new, new Item.Properties());
     }
-
+    public static Item register(Block block, Item.Properties settings) {
+        return register(block, BlockItem::new, settings);
+    }
     public static Item register(Block block, BiFunction<Block, Item.Properties, Item> factory) {
         return register(block, factory, new Item.Properties());
     }

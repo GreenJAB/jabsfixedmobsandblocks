@@ -74,6 +74,8 @@ public class LootTableAdditions {
                         .add(LootItem.lootTableItem(Items.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE))
                         .add(LootItem.lootTableItem(Items.AIR))
                         .build());
+            } else if (key==EntityTypes.GLOW_SQUID.getDefaultLootTable().get()) {
+                tableBuilder.pool(LootPool.lootPool().add(NestedLootTable.lootTableReference(lootTables.getOrThrow(LootTableRegistry.GLOW_SQUID_FROGLIGHT))).build());
             } else if (key==FIXED_FISHING_TREASURE_LOOT_TABLE && FabricLoader.getInstance().isModLoaded("jabsfixedenchanting")) {
                 HolderLookup.RegistryLookup<Enchantment> enchantments = holder.lookupOrThrow(Registries.ENCHANTMENT);
                 tableBuilder.modifyPools(builder -> builder

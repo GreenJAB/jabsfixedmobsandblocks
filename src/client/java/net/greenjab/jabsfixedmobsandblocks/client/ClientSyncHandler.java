@@ -33,6 +33,14 @@ public class ClientSyncHandler {
                         case "night" -> ParticleRegistry.VILLAGER_NIGHT;
                         default -> null;
                     };
+                    VillagerParticle.lastNeed = switch (payload.need()) {
+                        case "hungry","very_hungry" -> "villager_hungry";
+                        case "tired","very_tired" -> "villager_tired";
+                        case "lonely","very_lonely" -> "villager_lonely";
+                        case "lazy","very_lazy" -> "villager_lazy";
+                        case "dark","very_dark" -> "villager_dark";
+                        default -> null;
+                    };
                     if (particle != null) {
                         Vec3 d = Minecraft.getInstance().player.position().subtract(villager.position()).horizontal().normalize();
                         RandomSource random = villager.getRandom();
