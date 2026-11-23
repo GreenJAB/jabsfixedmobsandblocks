@@ -13,6 +13,8 @@
     "LayerDefinitionsMixin",
     "particle.MinecraftMixin",
     "particle.ParticleResourcesMixin",
+    "villager.BabyVillagerModelMixin",
+    "villager.BabyZombieVillagerModelMixin",
     "villager.LivingEntityRendererMixin",
     "villager.MerchantScreenMixin",
     "villager.VillagerEntityRendererMixin",
