@@ -1,8 +1,11 @@
 package net.greenjab.jabsfixedmobsandblocks.mixin.mobs;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.ItemRegistry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -14,7 +17,9 @@ import net.minecraft.world.entity.Bucketable;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRule;
 import org.jspecify.annotations.NonNull;
@@ -38,6 +43,20 @@ public abstract class AllayMixin extends PathfinderMob implements Bucketable {
     @Inject(method = "mobInteract", at = @At(value = "HEAD"), cancellable = true)
     public void bucket(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (!player.isShiftKeyDown()) Bucketable.bucketMobPickup(player, hand, this).ifPresent(cir::setReturnValue);
+    }
+
+    @WrapOperation(method = "allayConsidersItemEqual", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isSameItem(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
+    private boolean bundleCheck(ItemStack a, ItemStack b, Operation<Boolean> original) {
+        if (a.getComponents().has(DataComponents.BUNDLE_CONTENTS)) {
+            BundleContents bundle = a.getComponents().get(DataComponents.BUNDLE_CONTENTS);
+            if (bundle == null || bundle.isEmpty()) return original.call(a, b);
+            for (ItemStackTemplate item : bundle.items()) {
+                if (item.is(b.getItem())) {
+                    return true;
+                }
+            }
+        }
+        return original.call(a, b);
     }
 
     @Override public void setFromBucket(final boolean fromBucket) {}
