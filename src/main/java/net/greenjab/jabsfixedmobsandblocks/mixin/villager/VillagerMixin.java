@@ -89,7 +89,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 
     @ModifyExpressionValue(method = "spawnGolemIfNeeded", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I"))
     private int summon1GolemPerHostileMob(int original, @Local(argsOnly = true) int villagersNeededToAgree) {
-        if (!JabsFixedMobsAndBlocks.SERVER.getGameRules().get(GameRuleRegistry.ONE_IRON_GOLEM_PER_MOB)) return original;
+        if (JabsFixedMobsAndBlocks.SERVER == null || !JabsFixedMobsAndBlocks.SERVER.getGameRules().get(GameRuleRegistry.ONE_IRON_GOLEM_PER_MOB)) return original;
         if (original >= villagersNeededToAgree) {
             if (this.getBrain().hasMemoryValue(MemoryModuleType.NEAREST_HOSTILE)) {
                 LivingEntity enemy = this.getBrain().getMemoryInternal(MemoryModuleType.NEAREST_HOSTILE).get();

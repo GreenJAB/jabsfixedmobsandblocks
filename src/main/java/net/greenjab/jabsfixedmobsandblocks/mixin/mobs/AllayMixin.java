@@ -1,9 +1,12 @@
 package net.greenjab.jabsfixedmobsandblocks.mixin.mobs;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.GameRuleRegistry;
 import net.greenjab.jabsfixedmobsandblocks.registry.registries.ItemRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,7 +22,9 @@ import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRule;
 import org.jspecify.annotations.NonNull;
@@ -63,6 +68,20 @@ public abstract class AllayMixin extends PathfinderMob implements Bucketable {
             pickupEntity.discard();
             return Optional.of(InteractionResult.SUCCESS);
         } else return Optional.empty();
+    }
+
+    @WrapOperation(method = "allayConsidersItemEqual", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isSameItem(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
+    private boolean bundleCheck(ItemStack a, ItemStack b, Operation<Boolean> original) {
+        if (a.getComponents().has(DataComponents.BUNDLE_CONTENTS)) {
+            BundleContents bundle = a.getComponents().get(DataComponents.BUNDLE_CONTENTS);
+            if (bundle == null || bundle.isEmpty()) return original.call(a, b);
+            for (ItemStackTemplate item : bundle.items()) {
+                if (item.is(b.getItem())) {
+                    return true;
+                }
+            }
+        }
+        return original.call(a, b);
     }
 
     @Override public void setFromBucket(final boolean fromBucket) {}
